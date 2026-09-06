@@ -12,9 +12,11 @@
   "## ===== 角色名称 =====": "",
   "name_char_hermione": "赫敏·格兰杰",
   "name_char_draco": "德拉科·马尔福",
+  "name_char_harry": "哈利·波特",
   "name_char_neville": "纳威·隆巴顿",
   "desc_char_hermione": "聪明绝顶的万事通小姐，博学多才，待人忠诚。课堂上总是第一个答出答案，私下却会为了朋友挺身而出。",
   "desc_char_draco": "高傲的马尔福家族继承人，嘴上刻薄，内心却有着不为人知的脆弱与挣扎。",
+  "desc_char_harry": "大难不死的男孩，额头上有一道闪电形的伤疤。虽被预言为"天选之人"，却始终保持善良与谦逊，在一次次冒险中证明勇气比血统更重要。",
   "desc_char_neville": "内向羞怯的隆巴顿家族后人，笨手笨脚却心地善良，经过无数次跌倒与爬起，最终展现出惊人的勇气。",
 
   "## ===== 四大学院 =====": "",
@@ -167,8 +169,8 @@
   "evt_hermione_library_desc": "赫敏在图书馆埋头苦读……",
   "evt_draco_corridor_title": "走廊的偶遇",
   "evt_draco_corridor_desc": "德拉科在走廊拦住去路……",
-  "evt_neville_grounds_title": "场地上的友谊",
-  "evt_neville_grounds_desc": "纳威独自在场地边练习魔法……",
+  "evt_harry_grounds_title": "场地上的初遇",
+  "evt_harry_grounds_desc": "哈利独自站在场地边，望着远方的黑湖……",
 
   "## ===== 占位文本 =====": "",
   "placeholder_loading": "加载中……",

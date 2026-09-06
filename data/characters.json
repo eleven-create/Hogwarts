@@ -1,5 +1,5 @@
 {
-  "_comment": "角色定义表（characters.json）— M1 填充：3 个可攻略角色",
+  "_comment": "角色定义表（characters.json）— M1 填充：3 个可攻略角色（赫敏/德拉科/哈利）",
   "_field_doc": {
     "char_id": "全局唯一 ID，建议 char_xxx 格式",
     "display_name_key": "指向 /localization 里的键，显示名走 i18n",
@@ -51,12 +51,31 @@
       "interaction_bonus_affection": 5
     },
     {
+      "char_id": "char_harry",
+      "display_name_key": "name_char_harry",
+      "house": "house_gryffindor",
+      "gender": "male",
+      "portrait_set": "portraits/char_harry",
+      "romanceable": true,
+      "affection": 0,
+      "affection_max": 100,
+      "personality_tags": ["brave", "loyal", "just", "selfless", "determined"],
+      "schedule_id": "sched_student_default",
+      "unlock_condition": null,
+      "desc_key": "desc_char_harry",
+      "first_meet_location": "loc_train",
+      "favorite_stat": "courage",
+      "interaction_bonus_stat": "courage",
+      "interaction_bonus_affection": 5
+    },
+    {
+      "_comment": "以下为非可攻略 NPC（保留纳威为支线角色）",
       "char_id": "char_neville",
       "display_name_key": "name_char_neville",
       "house": "house_gryffindor",
       "gender": "male",
       "portrait_set": "portraits/char_neville",
-      "romanceable": true,
+      "romanceable": false,
       "affection": 0,
       "affection_max": 100,
       "personality_tags": ["shy", "kind", "brave", "determined", "clumsy"],
@@ -66,7 +85,7 @@
       "first_meet_location": "loc_great_hall",
       "favorite_stat": "courage",
       "interaction_bonus_stat": "courage",
-      "interaction_bonus_affection": 5
+      "interaction_bonus_affection": 3
     }
   ]
 }

@@ -90,21 +90,21 @@
       "choices": 2
     },
     {
-      "event_id": "evt_neville_grounds",
-      "title_key": "evt_neville_grounds_title",
-      "desc_key": "evt_neville_grounds_desc",
+      "event_id": "evt_harry_grounds",
+      "title_key": "evt_harry_grounds_title",
+      "desc_key": "evt_harry_grounds_desc",
       "trigger": {
         "date": null,
         "location": "loc_grounds",
         "conditions": [
-          {"flag": "met_neville", "value": true}
+          {"flag": "met_harry", "value": true}
         ]
       },
-      "ink_knot": "event_neville_grounds",
+      "ink_knot": "event_harry_grounds",
       "repeatable": false,
       "priority": 30,
       "event_type": "romance",
-      "romance_target": "char_neville",
+      "romance_target": "char_harry",
       "choices": 2
     }
   ]
