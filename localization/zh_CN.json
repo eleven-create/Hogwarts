@@ -1,0 +1,63 @@
+{
+  "_comment": "本地化文本表（zh_CN.json）。所有游戏内显示文本、IP 名词都在这里定义，禁止硬编码进代码。",
+  "_field_doc": {
+    "格式": "key: value，key 用点分隔层次，例如 name_char_001",
+    "使用约定": "在代码/JSON/ink 中用 key 引用，不要直接写文本"
+  },
+  "## ===== 角色名称 =====": "",
+  "name_char_001": "角色1",
+  "name_char_002": "角色2",
+  "name_char_003": "角色3",
+
+  "## ===== 地点名称 =====": "",
+  "name_loc_bedroom": "宿舍",
+  "name_loc_great_hall": "大厅",
+  "name_loc_grounds": "城堡外",
+
+  "## ===== UI 文本 =====": "",
+  "ui_main_menu_title": "游戏标题",
+  "ui_button_new_game": "新游戏",
+  "ui_button_continue": "继续游戏",
+  "ui_button_settings": "设置",
+  "ui_button_quit": "退出",
+  "ui_button_save": "保存",
+  "ui_button_load": "读取",
+  "ui_button_back": "返回",
+
+  "## ===== 属性名称 =====": "",
+  "stat_intelligence": "智力",
+  "stat_charm": "魅力",
+  "stat_courage": "勇气",
+  "stat_cunning": "狡黠",
+  "stat_magic_power": "魔力",
+  "stat_constitution": "体质",
+  "stat_energy": "精力",
+  "stat_mood": "心情",
+  "stat_money": "金加隆",
+  "stat_reputation": "声望",
+
+  "## ===== 换装选项 =====": "",
+  "appearance_body_default": "默认体型",
+  "appearance_hair_default": "默认发型",
+  "appearance_eyes_default": "默认瞳色",
+  "appearance_uniform_default": "默认校服",
+  "appearance_robe_default": "默认外袍",
+
+  "## ===== 时间相关 =====": "",
+  "time_morning": "上午",
+  "time_afternoon": "下午",
+  "time_evening": "傍晚",
+  "time_night": "夜晚",
+  "season_autumn": "秋季",
+  "season_winter": "冬季",
+  "season_spring": "春季",
+  "season_summer": "夏季",
+
+  "## ===== 关系等级 =====": "",
+  "relation_stranger": "陌生人",
+  "relation_acquaintance": "熟人",
+  "relation_friend": "朋友",
+  "relation_close_friend": "挚友",
+  "relation_romantic_interest": "暧昧对象",
+  "relation_beloved": "恋人"
+}

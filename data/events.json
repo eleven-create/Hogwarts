@@ -1,0 +1,19 @@
+{
+  "_comment": "事件定义表（events.json）",
+  "_field_doc": {
+    "event_id": "全局唯一 ID，建议 evt_xxx 格式",
+    "title_key": "事件标题 i18n key",
+    "trigger": {
+      "date": "触发日期条件（null = 无日期限制，格式待定）",
+      "location": "触发地点 ID（指向 locations.json）",
+      "conditions": [
+        {"stat": "属性ID", "op": ">= / <= / == / > / <", "value": "数值"},
+        {"flag": "flag ID", "value": "布尔值"}
+      ]
+    },
+    "ink_knot": "对应的 Ink knot 名称",
+    "repeatable": "是否可重复触发",
+    "priority": "优先级（数字越大越优先）"
+  },
+  "events": []
+}

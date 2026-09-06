@@ -1,0 +1,38 @@
+{
+  "_comment": "换装外观配置（appearance.json）。记录玩家选择的各层 variant_id。",
+  "_field_doc": {
+    "layer_type": "图层类型：body / hair / eyes / uniform / robe / accessory / wand",
+    "variant_id": "当前选中的变体 ID",
+    "variants": {
+      "variant_id": {"name_key": "i18n key", "sprite_path": "assets/portraits/xxx/yyy.png"}
+    }
+  },
+  "player_appearance": {
+    "body": "default",
+    "hair": "default",
+    "eyes": "default",
+    "uniform": "default",
+    "robe": "default",
+    "accessory": "none",
+    "wand": "none"
+  },
+  "available_variants": {
+    "body": {
+      "default": {"name_key": "appearance_body_default", "sprite_path": "assets/portraits/player/body/default.png"}
+    },
+    "hair": {
+      "default": {"name_key": "appearance_hair_default", "sprite_path": "assets/portraits/player/hair/default.png"}
+    },
+    "eyes": {
+      "default": {"name_key": "appearance_eyes_default", "sprite_path": "assets/portraits/player/eyes/default.png"}
+    },
+    "uniform": {
+      "default": {"name_key": "appearance_uniform_default", "sprite_path": "assets/portraits/player/uniform/default.png"}
+    },
+    "robe": {
+      "default": {"name_key": "appearance_robe_default", "sprite_path": "assets/portraits/player/robe/default.png"}
+    },
+    "accessory": {},
+    "wand": {}
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "_comment": "本地化加载器/工具脚本（i18n.gd）。依赖 DataLoader 和 localization 目录下的 JSON 文件。",
+  "_field_doc": {
+    "load_text(key)": "根据 key 加载对应文本，key 不存在时返回 key 本身",
+    "set_locale(locale)": "切换语言，例如 set_locale('zh_CN')",
+    "get_locale()": "获取当前语言代码"
+  },
+  "## 当前为空，等待 i18n 系统实现后填充。"
+}

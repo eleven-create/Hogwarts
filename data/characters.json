@@ -1,0 +1,17 @@
+{
+  "_comment": "角色定义表（characters.json）",
+  "_field_doc": {
+    "char_id": "全局唯一 ID，建议 char_xxx 格式",
+    "display_name_key": "指向 /localization 里的键，显示名走 i18n",
+    "house": "所属学院 ID（关联 houses.json，待扩展）",
+    "gender": "female / male / other",
+    "portrait_set": "立绘资源路径前缀（assets/portraits/<id>/）",
+    "romanceable": "是否可攻略",
+    "affection": "初始好感度",
+    "affection_max": "好感度上限",
+    "personality_tags": ["性格标签列表"],
+    "schedule_id": "日程表 ID（指向 schedules.json，待扩展）",
+    "unlock_condition": "解锁条件描述（null = 初始可用）"
+  },
+  "characters": []
+}

@@ -1,0 +1,14 @@
+{
+  "_comment": "地点定义表（locations.json）",
+  "_field_doc": {
+    "loc_id": "全局唯一 ID，建议 loc_xxx 格式",
+    "name_key": "显示名的 i18n key",
+    "scene_path": "Godot 场景相对路径（res://scenes/world/xxx.tscn）",
+    "exits": [
+      {"to": "目标地点ID", "direction": "north/south/east/west", "prompt_key": "i18n key"}
+    ],
+    "npcs": ["该地点 NPC 的 char_id 列表"],
+    "events": ["该地点触发的事件 event_id 列表"]
+  },
+  "locations": []
+}

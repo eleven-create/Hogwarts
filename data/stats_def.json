@@ -1,0 +1,26 @@
+{
+  "_comment": "数值系统定义（stats_def.json）",
+  "_field_doc": {
+    "stat_id": "全局唯一 ID",
+    "label_key": "显示名 i18n key",
+    "min": "数值下限",
+    "max": "数值上限",
+    "default": "初始默认值",
+    "category": "vital(生命) / magic(魔法) / social(社交) / skill(技能) / state(状态) / hidden",
+    "visible_in_ui": "是否在 UI 上展示",
+    "is_experience_based": "是否通过经验值升级（true = 主属性，false = 直接赋值）",
+    "exp_to_upgrade": "每级所需经验（is_experience_based=true 时生效）"
+  },
+  "stats": [
+    {"stat_id": "intelligence", "label_key": "stat_intelligence", "min": 0, "max": 100, "default": 10, "category": "skill", "visible_in_ui": true, "is_experience_based": true, "exp_to_upgrade": 100},
+    {"stat_id": "charm", "label_key": "stat_charm", "min": 0, "max": 100, "default": 10, "category": "social", "visible_in_ui": true, "is_experience_based": true, "exp_to_upgrade": 100},
+    {"stat_id": "courage", "label_key": "stat_courage", "min": 0, "max": 100, "default": 10, "category": "skill", "visible_in_ui": true, "is_experience_based": true, "exp_to_upgrade": 100},
+    {"stat_id": "cunning", "label_key": "stat_cunning", "min": 0, "max": 100, "default": 10, "category": "skill", "visible_in_ui": true, "is_experience_based": true, "exp_to_upgrade": 100},
+    {"stat_id": "magic_power", "label_key": "stat_magic_power", "min": 0, "max": 100, "default": 10, "category": "magic", "visible_in_ui": true, "is_experience_based": true, "exp_to_upgrade": 100},
+    {"stat_id": "constitution", "label_key": "stat_constitution", "min": 0, "max": 100, "default": 10, "category": "vital", "visible_in_ui": true, "is_experience_based": true, "exp_to_upgrade": 100},
+    {"stat_id": "energy", "label_key": "stat_energy", "min": 0, "max": 100, "default": 100, "category": "state", "visible_in_ui": true, "is_experience_based": false},
+    {"stat_id": "mood", "label_key": "stat_mood", "min": -50, "max": 50, "default": 0, "category": "state", "visible_in_ui": true, "is_experience_based": false},
+    {"stat_id": "money", "label_key": "stat_money", "min": 0, "max": 999999, "default": 0, "category": "state", "visible_in_ui": true, "is_experience_based": false},
+    {"stat_id": "reputation", "label_key": "stat_reputation", "min": 0, "max": 100, "default": 50, "category": "state", "visible_in_ui": true, "is_experience_based": false}
+  ]
+}

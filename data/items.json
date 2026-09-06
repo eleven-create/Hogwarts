@@ -1,0 +1,16 @@
+{
+  "_comment": "物品定义表（items.json）",
+  "_field_doc": {
+    "item_id": "全局唯一 ID，建议 item_xxx 格式",
+    "name_key": "显示名 i18n key",
+    "desc_key": "描述 i18n key",
+    "type": "equipment / consumable / quest / currency",
+    "icon": "图标路径（assets/sprites/items/xxx.png）",
+    "effects": [
+      {"target": "stat_id / affection", "op": "add / set / mult", "value": 数值, "target_id": "角色ID（affection时必填）"}
+    ],
+    "stackable": "是否可堆叠",
+    "max_stack": "堆叠上限（堆叠时必填）"
+  },
+  "items": []
+}

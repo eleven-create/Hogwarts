@@ -1,0 +1,63 @@
+{
+  "_comment": "English localization placeholder. Mirror structure of zh_CN.json.",
+  "_field_doc": {
+    "格式": "key: value，key must match zh_CN.json keys",
+    "使用约定": "Keep keys identical, only values translated"
+  },
+  "## ===== Character Names =====": "",
+  "name_char_001": "Character 1",
+  "name_char_002": "Character 2",
+  "name_char_003": "Character 3",
+
+  "## ===== Location Names =====": "",
+  "name_loc_bedroom": "Bedroom",
+  "name_loc_great_hall": "Great Hall",
+  "name_loc_grounds": "Grounds",
+
+  "## ===== UI Text =====": "",
+  "ui_main_menu_title": "Game Title",
+  "ui_button_new_game": "New Game",
+  "ui_button_continue": "Continue",
+  "ui_button_settings": "Settings",
+  "ui_button_quit": "Quit",
+  "ui_button_save": "Save",
+  "ui_button_load": "Load",
+  "ui_button_back": "Back",
+
+  "## ===== Stats =====": "",
+  "stat_intelligence": "Intelligence",
+  "stat_charm": "Charm",
+  "stat_courage": "Courage",
+  "stat_cunning": "Cunning",
+  "stat_magic_power": "Magic Power",
+  "stat_constitution": "Constitution",
+  "stat_energy": "Energy",
+  "stat_mood": "Mood",
+  "stat_money": "Gold",
+  "stat_reputation": "Reputation",
+
+  "## ===== Appearance =====": "",
+  "appearance_body_default": "Default Body",
+  "appearance_hair_default": "Default Hair",
+  "appearance_eyes_default": "Default Eyes",
+  "appearance_uniform_default": "Default Uniform",
+  "appearance_robe_default": "Default Robe",
+
+  "## ===== Time =====": "",
+  "time_morning": "Morning",
+  "time_afternoon": "Afternoon",
+  "time_evening": "Evening",
+  "time_night": "Night",
+  "season_autumn": "Autumn",
+  "season_winter": "Winter",
+  "season_spring": "Spring",
+  "season_summer": "Summer",
+
+  "## ===== Relations =====": "",
+  "relation_stranger": "Stranger",
+  "relation_acquaintance": "Acquaintance",
+  "relation_friend": "Friend",
+  "relation_close_friend": "Close Friend",
+  "relation_romantic_interest": "Romantic Interest",
+  "relation_beloved": "Beloved"
+}

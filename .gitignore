@@ -1,0 +1,35 @@
+# Godot-specific
+.godot/
+*.import
+
+# Build outputs
+bin/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Godot editor
+*.bak
+*.orig
+*.log
+
+# User-specific
+user://*.png
+user://*.wav
+user://*.ogg
+user://*.flac
+user://*.gltf
+user://*.glb
+user://*.obj
+user://*.hdr
+
+# Export
+export/
+export_presets.cfg
+
+# Godot 4 cache
+.godot_cache/
