@@ -1,7 +1,8 @@
 ## time_manager.gd
 ## 职责：日历、时间推进、课程表管理
 ## 依赖：DataLoader
-class_name TimeManager
+## 时间管理器（Autoload: TimeManager）
+## 注意：不在此处定义 class_name，避免与 Autoload 单例同名冲突
 extends Node
 
 ## 时间槽枚举

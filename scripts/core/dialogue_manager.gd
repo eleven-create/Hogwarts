@@ -1,7 +1,8 @@
 ## dialogue_manager.gd
 ## 职责：Ink 剧情桥接 —— 加载 Ink、注册外部函数、驱动对话、序列化状态
 ## 依赖：DataLoader, StatsManager, RelationManager, FlagManager, EventManager
-class_name DialogueManager
+## 对话管理器（Autoload: DialogueManager）
+## 注意：不在此处定义 class_name，避免与 Autoload 单例同名冲突
 extends Node
 
 ## Ink 运行状态

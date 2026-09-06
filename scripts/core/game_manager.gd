@@ -1,7 +1,8 @@
 ## game_manager.gd
 ## 职责：全局游戏状态、场景切换、主循环控制
 ## 依赖：DataLoader, TimeManager, SaveManager
-class_name GameManager
+## 游戏主管理器（Autoload: GameManager）
+## 注意：不在此处定义 class_name，避免与 Autoload 单例同名冲突
 extends Node
 
 ## 游戏状态枚举

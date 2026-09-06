@@ -1,7 +1,8 @@
 ## stats_manager.gd
 ## 职责：玩家属性读写、经验值升级、属性变化通知
 ## 依赖：DataLoader
-class_name StatsManager
+## 属性管理器（Autoload: StatsManager）
+## 注意：不在此处定义 class_name，避免与 Autoload 单例同名冲突
 extends Node
 
 ## 运行时属性值（stat_id -> 当前值）

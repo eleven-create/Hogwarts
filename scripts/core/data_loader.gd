@@ -2,7 +2,8 @@
 ## 职责：启动时加载 /data 下所有 JSON，暴露全局数据访问接口
 ## 依赖：无
 ## 输出：供其他所有单例调用
-class_name DataLoader
+## 数据加载器单例（通过 Autoload 注册为全局 DataLoader）
+## 注意：不在此处定义 class_name，避免与 Autoload 单例同名冲突
 extends Node
 
 ## 数据缓存

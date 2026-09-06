@@ -1,7 +1,8 @@
 ## relation_manager.gd
 ## 职责：好感度管理、角色关系查询
 ## 依赖：DataLoader
-class_name RelationManager
+## 关系管理器（Autoload: RelationManager）
+## 注意：不在此处定义 class_name，避免与 Autoload 单例同名冲突
 extends Node
 
 ## 运行时好感度（char_id -> affection 值）

@@ -1,7 +1,8 @@
 ## save_manager.gd
 ## 职责：存档/读档（JSON 格式），整合所有单例状态
 ## 依赖：所有单例
-class_name SaveManager
+## 存档管理器（Autoload: SaveManager）
+## 注意：不在此处定义 class_name，避免与 Autoload 单例同名冲突
 extends Node
 
 ## 存档目录

@@ -33,3 +33,4 @@ export_presets.cfg
 
 # Godot 4 cache
 .godot_cache/
+*.uid

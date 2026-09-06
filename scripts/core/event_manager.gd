@@ -1,7 +1,8 @@
 ## event_manager.gd
 ## 职责：事件触发判定、事件队列管理
 ## 依赖：DataLoader, FlagManager, StatsManager, TimeManager
-class_name EventManager
+## 事件管理器（Autoload: EventManager）
+## 注意：不在此处定义 class_name，避免与 Autoload 单例同名冲突
 extends Node
 
 ## 事件队列

@@ -1,7 +1,8 @@
 ## flag_manager.gd
 ## 职责：剧情 flag 存储与查询（剧情分支、事件完成标记）
 ## 依赖：无
-class_name FlagManager
+## 标志位管理器（Autoload: FlagManager）
+## 注意：不在此处定义 class_name，避免与 Autoload 单例同名冲突
 extends Node
 
 ## 运行时 flag（flag_id -> bool/数值）
