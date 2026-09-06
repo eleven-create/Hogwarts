@@ -1,63 +1,98 @@
 ## player_movement.gd
-## 职责：玩家角色移动控制 — WASD/方向键，支持碰撞和场景出口检测
-## 依赖：GameManager, TimeManager
-class_name PlayerMovement
+## 职责：玩家角色移动控制 + 自动检测场景出口
+## 设计：所有 Area2D 名为 "ExitArea_*"，出口检测自动扫描
+## 依赖：GameManager, TimeManager, DataLoader, StatsManager
+## 注意：不在此处定义 class_name（4.7 严格检查后保留）
 extends CharacterBody2D
 
 ## 移动参数
-@export var move_speed: float = 200.0  ## 像素/秒
+@export var move_speed: float = 200.0
 
 ## 输入方向
 var _input_dir: Vector2 = Vector2.ZERO
 
-## 出口区域引用
-@onready var exit_hint: Label = $"../ExitHint"
-var _near_exit: bool = false
+## 当前接近的出口
+var _near_exit: Area2D = null
+
+## 所有出口字典：Area2D -> 目标 loc_id（启动时自动扫描）
+var _exit_targets: Dictionary = {}
+
+## 顶部提示文字引用（自动发现）
+@onready var exit_hint: Label = get_node_or_null("../ExitHint")
 
 func _ready() -> void:
 	print("[PlayerMovement] 就绪，位置: ", position)
+	_scan_exits()
+	GameManager.location_changed.connect(_on_location_changed)
 
-func _physics_process(delta: float) -> void:
-	## 读取输入
+func _physics_process(_delta: float) -> void:
 	_input_dir = Vector2(
 		Input.get_axis("ui_left", "ui_right"),
 		Input.get_axis("ui_up", "ui_down")
 	).normalized()
-	
-	## 移动
+
 	if _input_dir != Vector2.ZERO:
 		velocity = _input_dir * move_speed
 		move_and_slide()
-		## 能量消耗（每帧）
-		# StatsManager.change_stat("energy", -0.01)
 	else:
 		velocity = Vector2.ZERO
-	
+
 	## 出口交互提示
-	if _near_exit and Input.is_action_just_pressed("ui_accept"):
+	if _near_exit != null and Input.is_action_just_pressed("ui_accept"):
 		_change_location()
 
-## 离开场景时恢复精力
-func _exit_tree() -> void:
-	pass  ## TODO: 睡眠恢复逻辑
+## 扫描所有 ExitArea 子节点，连接信号
+func _scan_exits() -> void:
+	var parent: Node = get_parent()
+	if parent == null:
+		return
+	for child in parent.get_children():
+		if child is Area2D and String(child.name).begins_with("ExitArea"):
+			var target_loc: String = String(child.name).replace("ExitArea_", "")
+			_exit_targets[child] = target_loc
+			child.body_entered.connect(_on_exit_entered.bind(child))
+			child.body_exited.connect(_on_exit_exited.bind(child))
+			print("[PlayerMovement] 注册出口: ", child.name, " -> ", target_loc)
 
-## 场景切换
 func _change_location() -> void:
-	## TODO: 从 locations.json 读取下一个 loc_id
-	print("[PlayerMovement] 切换到走廊...")
-	GameManager.change_location("loc_corridor")
-	## 消耗精力
+	if _near_exit == null:
+		return
+	var target_loc: String = _exit_targets.get(_near_exit, "")
+	if target_loc.is_empty():
+		return
+	print("[PlayerMovement] 切换到: ", target_loc)
+	GameManager.change_location(target_loc)
 	StatsManager.change_stat("energy", -5.0)
+	_hide_hint()
 
-## 出口区域检测
-func _on_exit_area_body_entered(_body: Node2D) -> void:
-	_near_exit = true
-	if exit_hint:
+func _on_exit_entered(body: Node2D, area: Area2D) -> void:
+	if body != self:
+		return
+	_near_exit = area
+	var target_loc: String = _exit_targets.get(area, "")
+	if exit_hint and target_loc != "":
+		var loc: Dictionary = DataLoader.get_location(target_loc)
+		var loc_name_key: String = loc.get("name_key", "")
+		var loc_id: String = loc.get("loc_id", "未知地点")
+		exit_hint.text = "按 E 前往 " + loc_id
 		exit_hint.visible = true
-	print("[PlayerMovement] 进入出口区域")
+	print("[PlayerMovement] 进入出口区域 -> ", target_loc)
 
-func _on_exit_area_body_exited(_body: Node2D) -> void:
-	_near_exit = false
+func _on_exit_exited(body: Node2D, area: Area2D) -> void:
+	if body != self:
+		return
+	if _near_exit == area:
+		_near_exit = null
+		_hide_hint()
+
+func _hide_hint() -> void:
 	if exit_hint:
 		exit_hint.visible = false
-	print("[PlayerMovement] 离开出口区域")
+
+func _on_location_changed(_loc_id: String) -> void:
+	## 场景切换后，等一帧重置玩家位置
+	await get_tree().process_frame
+	position = Vector2(640, 400)
+	_near_exit = null
+	_hide_hint()
+	print("[PlayerMovement] 重置位置到出生点")

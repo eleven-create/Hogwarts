@@ -1,14 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://bedroom_scene_001"]
+[gd_scene load_steps=2 format=3 uid="uid://great_hall_scene_001"]
 
 [ext_resource type="Script" path="res://scripts/systems/player_movement.gd" id="1_player"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_exdown"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exnorth"]
 size = Vector2(200, 50)
 
-## 宿舍场景（bedroom.tscn）
-## MVP 第一个可探索地点
-## 玩法：玩家用 WASD/方向键移动，走到出口区域后按 E 切换地点
-[node name="Bedroom" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exsouth"]
+size = Vector2(200, 50)
+
+## 大礼堂场景（great_hall.tscn）
+## MVP 主场景：食堂、课程、社交、主线剧情
+## 玩家可触发 evt_great_hall_meal（早餐事件）
+[node name="GreatHall" type="Node2D"]
 
 ## 玩家角色
 [node name="Player" type="CharacterBody2D" parent="."]
@@ -20,16 +23,16 @@ offset_left = -10.0
 offset_top = -20.0
 offset_right = 10.0
 offset_bottom = 0.0
-color = Color(0.2, 0.4, 0.9, 1.0)
+color = Color(0.9, 0.7, 0.2, 1)  ## 金色（格兰芬多主题）
 
-## 背景占位（用纯色代表宿舍房间）
+## 背景（暖色调代表大礼堂的烛光氛围）
 [node name="RoomBackground" type="ColorRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.15, 0.1, 0.2, 1.0)  ## 深紫色背景
+color = Color(0.25, 0.18, 0.1, 1)  ## 暖棕色
 
-## 顶部场景名标签
+## 顶部标签（场景名）
 [node name="LocationLabel" type="Label" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
@@ -39,17 +42,17 @@ offset_top = 20.0
 offset_right = 100.0
 offset_bottom = 50.0
 grow_horizontal = 2
-text = "格兰芬多宿舍"
+text = "大礼堂"
 horizontal_alignment = 1
 
-## 下出口 → 走廊
+## 北出口 → 走廊
 [node name="ExitArea_loc_corridor" type="Area2D" parent="."]
-position = Vector2(640, 670)
+position = Vector2(640, 50)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea_loc_corridor"]
-shape = SubResource("RectangleShape2D_exdown")
+shape = SubResource("RectangleShape2D_exnorth")
 
-[node name="ExitHintDown" type="Label" parent="ExitArea_loc_corridor"]
+[node name="ExitHintNorth" type="Label" parent="ExitArea_loc_corridor"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -61,11 +64,34 @@ offset_right = 60.0
 offset_bottom = 10.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "↓ 走廊"
+text = "↑ 走廊"
 horizontal_alignment = 1
 visible = false
 
-## 出口提示文字
+## 南出口 → 户外场地
+[node name="ExitArea_loc_grounds" type="Area2D" parent="."]
+position = Vector2(640, 670)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea_loc_grounds"]
+shape = SubResource("RectangleShape2D_exsouth")
+
+[node name="ExitHintSouth" type="Label" parent="ExitArea_loc_grounds"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -10.0
+offset_right = 60.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "↓ 户外场地"
+horizontal_alignment = 1
+visible = false
+
+## 出口提示文字（由 PlayerMovement 控制显示内容）
 [node name="ExitHint" type="Label" parent="."]
 anchors_preset = 7
 anchor_left = 0.5

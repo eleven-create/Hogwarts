@@ -13,6 +13,9 @@ var current_state: GameState = GameState.MENU
 var current_location: String = ""
 var is_new_game: bool = true
 
+## 出生点（默认中央）
+@export var spawn_position: Vector2 = Vector2(640, 360)
+
 ## 信号
 signal game_state_changed(state: GameState)
 signal location_changed(loc_id: String)
@@ -30,10 +33,18 @@ func change_scene(scene_path: String) -> void:
 		return
 	get_tree().change_scene_to_file(scene_path)
 
+## 切换地点：根据 loc_id 查 locations.json 加载对应场景
 func change_location(loc_id: String) -> void:
+	if loc_id == current_location:
+		return
+	var loc: Dictionary = DataLoader.get_location(loc_id)
+	if loc.is_empty():
+		push_error("[GameManager] 找不到地点: " + loc_id)
+		return
 	current_location = loc_id
 	location_changed.emit(loc_id)
-	## TODO: 加载对应地图场景
+	print("[GameManager] 切换地点: ", loc_id, " -> ", loc.get("scene_path", ""))
+	change_scene(loc.get("scene_path", ""))
 
 ## ---- 状态控制 ----
 
@@ -57,6 +68,9 @@ func resume_game() -> void:
 func start_new_game() -> void:
 	is_new_game = true
 	current_location = ""
+	## 初始化玩家位置为宿舍
+	current_location = "loc_bedroom"
+	location_changed.emit(current_location)
 	## TODO: 重置所有系统状态
 	## TODO: 加载初始存档
 	change_scene("res://scenes/world/bedroom.tscn")
