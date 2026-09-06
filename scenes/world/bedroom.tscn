@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3 uid="uid://bedroom_scene_001"]
+
+[ext_resource type="Script" path="res://scripts/systems/player_movement.gd" id="1_player"]
+
+## 宿舍场景（bedroom.tscn）
+## MVP 第一个可探索地点
+## 玩法：玩家用 WASD/方向键移动，走到出口区域后按 E 切换地点
+[node name="Bedroom" type="Node2D"]
+
+## 玩家角色
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(640, 400)
+script = ExtResource("1_player")
+
+[node name="Body" type="ColorRect" parent="Player"]
+offset_left = -10.0
+offset_top = -20.0
+offset_right = 10.0
+offset_bottom = 0.0
+color = Color(0.2, 0.4, 0.9, 1.0)
+
+## 背景占位（用纯色代表宿舍房间）
+[node name="RoomBackground" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.15, 0.1, 0.2, 1.0)  ## 深紫色背景
+
+## 出口提示文字
+[node name="ExitHint" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -80.0
+offset_right = 80.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "按 E 前往走廊"
+horizontal_alignment = 1
+visible = false
+
+## UI 层
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="StatsPanel" parent="CanvasLayer" instance=ExtResource("res://scenes/ui/ui_stats_panel.tscn")]
+layer = 10
+
+[node name="TimeIndicator" parent="CanvasLayer" instance=ExtResource("res://scenes/ui/ui_time_indicator.tscn")]
+layer = 10

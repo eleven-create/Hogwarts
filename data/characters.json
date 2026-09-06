@@ -1,9 +1,9 @@
 {
-  "_comment": "角色定义表（characters.json）",
+  "_comment": "角色定义表（characters.json）— M1 填充：3 个可攻略角色",
   "_field_doc": {
     "char_id": "全局唯一 ID，建议 char_xxx 格式",
     "display_name_key": "指向 /localization 里的键，显示名走 i18n",
-    "house": "所属学院 ID（关联 houses.json，待扩展）",
+    "house": "所属学院 ID：house_gryffindor / house_slytherin / house_ravenclaw / house_hufflepuff",
     "gender": "female / male / other",
     "portrait_set": "立绘资源路径前缀（assets/portraits/<id>/）",
     "romanceable": "是否可攻略",
@@ -13,5 +13,60 @@
     "schedule_id": "日程表 ID（指向 schedules.json，待扩展）",
     "unlock_condition": "解锁条件描述（null = 初始可用）"
   },
-  "characters": []
+  "characters": [
+    {
+      "char_id": "char_hermione",
+      "display_name_key": "name_char_hermione",
+      "house": "house_gryffindor",
+      "gender": "female",
+      "portrait_set": "portraits/char_hermione",
+      "romanceable": true,
+      "affection": 0,
+      "affection_max": 100,
+      "personality_tags": ["intelligent", "loyal", "perfectionist", "brave", "bookworm"],
+      "schedule_id": "sched_student_default",
+      "unlock_condition": null,
+      "desc_key": "desc_char_hermione",
+      "first_meet_location": "loc_train",
+      "favorite_stat": "intelligence",
+      "interaction_bonus_stat": "intelligence",
+      "interaction_bonus_affection": 5
+    },
+    {
+      "char_id": "char_draco",
+      "display_name_key": "name_char_draco",
+      "house": "house_slytherin",
+      "gender": "male",
+      "portrait_set": "portraits/char_draco",
+      "romanceable": true,
+      "affection": 0,
+      "affection_max": 100,
+      "personality_tags": ["arrogant", "cunning", "ambitious", "protective", "brooding"],
+      "schedule_id": "sched_student_default",
+      "unlock_condition": null,
+      "desc_key": "desc_char_draco",
+      "first_meet_location": "loc_train",
+      "favorite_stat": "cunning",
+      "interaction_bonus_stat": "cunning",
+      "interaction_bonus_affection": 5
+    },
+    {
+      "char_id": "char_neville",
+      "display_name_key": "name_char_neville",
+      "house": "house_gryffindor",
+      "gender": "male",
+      "portrait_set": "portraits/char_neville",
+      "romanceable": true,
+      "affection": 0,
+      "affection_max": 100,
+      "personality_tags": ["shy", "kind", "brave", "determined", "clumsy"],
+      "schedule_id": "sched_student_default",
+      "unlock_condition": null,
+      "desc_key": "desc_char_neville",
+      "first_meet_location": "loc_great_hall",
+      "favorite_stat": "courage",
+      "interaction_bonus_stat": "courage",
+      "interaction_bonus_affection": 5
+    }
+  ]
 }

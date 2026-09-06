@@ -1,5 +1,5 @@
 {
-  "_comment": "事件定义表（events.json）",
+  "_comment": "事件定义表（events.json）— M1 填充：主线 + 好感事件",
   "_field_doc": {
     "event_id": "全局唯一 ID，建议 evt_xxx 格式",
     "title_key": "事件标题 i18n key",
@@ -13,7 +13,99 @@
     },
     "ink_knot": "对应的 Ink knot 名称",
     "repeatable": "是否可重复触发",
-    "priority": "优先级（数字越大越优先）"
+    "priority": "优先级（数字越大越优先）",
+    "event_type": "main / romance / social / random"
   },
-  "events": []
+  "events": [
+    {
+      "event_id": "evt_morning_wake",
+      "title_key": "evt_morning_wake_title",
+      "desc_key": "evt_morning_wake_desc",
+      "trigger": {
+        "date": null,
+        "location": "loc_bedroom",
+        "conditions": [
+          {"time_slot": "morning"}
+        ]
+      },
+      "ink_knot": "event_morning_wake",
+      "repeatable": true,
+      "priority": 100,
+      "event_type": "main",
+      "choices": 0
+    },
+    {
+      "event_id": "evt_great_hall_meal",
+      "title_key": "evt_great_hall_meal_title",
+      "desc_key": "evt_great_hall_meal_desc",
+      "trigger": {
+        "date": null,
+        "location": "loc_great_hall",
+        "conditions": [
+          {"time_slot": "morning"}
+        ]
+      },
+      "ink_knot": "event_great_hall_meal",
+      "repeatable": true,
+      "priority": 50,
+      "event_type": "social",
+      "choices": 1,
+      "available_npcs": ["char_hermione", "char_draco", "char_neville"]
+    },
+    {
+      "event_id": "evt_hermione_library",
+      "title_key": "evt_hermione_library_title",
+      "desc_key": "evt_hermione_library_desc",
+      "trigger": {
+        "date": null,
+        "location": "loc_corridor",
+        "conditions": [
+          {"flag": "met_hermione", "value": true},
+          {"stat": "intelligence", "op": ">=", "value": 20}
+        ]
+      },
+      "ink_knot": "event_hermione_library",
+      "repeatable": false,
+      "priority": 30,
+      "event_type": "romance",
+      "romance_target": "char_hermione",
+      "choices": 2
+    },
+    {
+      "event_id": "evt_draco_corridor",
+      "title_key": "evt_draco_corridor_title",
+      "desc_key": "evt_draco_corridor_desc",
+      "trigger": {
+        "date": null,
+        "location": "loc_corridor",
+        "conditions": [
+          {"flag": "met_draco", "value": true}
+        ]
+      },
+      "ink_knot": "event_draco_corridor",
+      "repeatable": false,
+      "priority": 30,
+      "event_type": "romance",
+      "romance_target": "char_draco",
+      "choices": 2
+    },
+    {
+      "event_id": "evt_neville_grounds",
+      "title_key": "evt_neville_grounds_title",
+      "desc_key": "evt_neville_grounds_desc",
+      "trigger": {
+        "date": null,
+        "location": "loc_grounds",
+        "conditions": [
+          {"flag": "met_neville", "value": true}
+        ]
+      },
+      "ink_knot": "event_neville_grounds",
+      "repeatable": false,
+      "priority": 30,
+      "event_type": "romance",
+      "romance_target": "char_neville",
+      "choices": 2
+    }
+  ]
 }

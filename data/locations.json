@@ -1,5 +1,5 @@
 {
-  "_comment": "地点定义表（locations.json）",
+  "_comment": "地点定义表（locations.json）— M1 填充：3 个 MVP 场景",
   "_field_doc": {
     "loc_id": "全局唯一 ID，建议 loc_xxx 格式",
     "name_key": "显示名的 i18n key",
@@ -10,5 +10,60 @@
     "npcs": ["该地点 NPC 的 char_id 列表"],
     "events": ["该地点触发的事件 event_id 列表"]
   },
-  "locations": []
+  "locations": [
+    {
+      "loc_id": "loc_bedroom",
+      "name_key": "name_loc_bedroom",
+      "desc_key": "desc_loc_bedroom",
+      "scene_path": "res://scenes/world/bedroom.tscn",
+      "floor": 7,
+      "building": "grffindor_tower",
+      "exits": [
+        {"to": "loc_corridor", "direction": "down", "prompt_key": "ui_exit_to_corridor", "is_stairs": true}
+      ],
+      "npcs": [],
+      "events": ["evt_morning_wake", "evt_bedroom_explore"]
+    },
+    {
+      "loc_id": "loc_great_hall",
+      "name_key": "name_loc_great_hall",
+      "desc_key": "desc_loc_great_hall",
+      "scene_path": "res://scenes/world/great_hall.tscn",
+      "floor": 1,
+      "building": "castle_main",
+      "exits": [
+        {"to": "loc_corridor", "direction": "north", "prompt_key": "ui_exit_to_corridor", "is_stairs": false},
+        {"to": "loc_grounds", "direction": "south", "prompt_key": "ui_exit_to_grounds", "is_stairs": false}
+      ],
+      "npcs": ["char_hermione", "char_draco", "char_neville"],
+      "events": ["evt_great_hall_meal", "evt_sorting_ceremony"]
+    },
+    {
+      "loc_id": "loc_grounds",
+      "name_key": "name_loc_grounds",
+      "desc_key": "desc_loc_grounds",
+      "scene_path": "res://scenes/world/grounds.tscn",
+      "floor": 0,
+      "building": "castle_outside",
+      "exits": [
+        {"to": "loc_great_hall", "direction": "north", "prompt_key": "ui_enter_castle", "is_stairs": false}
+      ],
+      "npcs": [],
+      "events": ["evt_grounds_meet_hagrid", "evt_forbidden_forest_teaser"]
+    },
+    {
+      "loc_id": "loc_corridor",
+      "name_key": "name_loc_corridor",
+      "desc_key": "desc_loc_corridor",
+      "scene_path": "res://scenes/world/corridor.tscn",
+      "floor": 3,
+      "building": "castle_main",
+      "exits": [
+        {"to": "loc_bedroom", "direction": "up", "prompt_key": "ui_exit_to_bedroom", "is_stairs": true},
+        {"to": "loc_great_hall", "direction": "down", "prompt_key": "ui_exit_to_great_hall", "is_stairs": true}
+      ],
+      "npcs": [],
+      "events": []
+    }
+  ]
 }

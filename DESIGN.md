@@ -317,16 +317,37 @@ body(体型/肤色) → hair → eyes → uniform(校服/院徽) → robe(外袍
 
 ## 13. 当前进度
 
-> 本仓库目前处于 **「骨架阶段」**——只搭好了目录与占位文件，**脚本和剧情内容为空**。
+### ✅ M0 骨架阶段（已完成）
 
-后续会按以下顺序填充（参考 M0–M5）：
+- ✅ Git 仓库初始化（首个 commit: `baff9a7`）
+- ✅ `project.godot` 已创建（Godot 4.x，1280×720）
+- ✅ 9 个 Autoload 单例已配置（DataLoader/GameManager/TimeManager/StatsManager/RelationManager/FlagManager/EventManager/DialogueManager/SaveManager）
+- ✅ `.gitignore` 已配置
+- ✅ 主菜单场景 `scenes/ui/ui_main_menu.tscn` + 脚本已就绪
+- ✅ 所有脚本使用静态类型写法
 
-1. `data/*.json` 真实数据（世界观配置）
-2. `localization/*` IP 名词
-3. `scripts/core` 单例空壳
-4. `scenes/ui` 主菜单 / 对话框 / 背包
-5. `ink/` 第一章剧情
-6. `scenes/world/` 第一个可探索地点
+### 🚧 M1 核心循环（进行中）
+
+完成情况：
+
+1. ✅ `data/characters.json` 真实数据 — 3 个可攻略角色（赫敏/德拉科/纳威）
+2. ✅ `data/locations.json` 真实数据 — 4 个场景（宿舍/大礼堂/场地/走廊）
+3. ✅ `data/events.json` 真实数据 — 5 个初始事件（含主线+好感事件）
+4. ✅ `data/houses.json` 四大学院定义
+5. ✅ `localization/zh_CN.json` 完整 IP 名词（霍格沃茨人物/地点/物品/学院）
+6. ✅ `scripts/ui/ui_stats_panel.{tscn,gd}` 属性面板 UI（监听 StatsManager 信号）
+7. ✅ `scripts/ui/ui_time_indicator.{tscn,gd}` 时间指示器（监听 TimeManager 信号）
+8. ✅ `scripts/systems/player_movement.gd` 玩家移动系统（输入 + 出口检测）
+9. ✅ `scenes/world/bedroom.tscn` 宿舍场景（MVP 第一个可探索地点）
+
+### 🎯 后续 M1 待办：
+
+- [ ] `scenes/world/great_hall.tscn` 大礼堂场景
+- [ ] `scenes/world/grounds.tscn` 户外场地
+- [ ] `scenes/world/corridor.tscn` 走廊
+- [ ] `data/items.json` 物品配置（基础道具：魔杖/隐形衣/分院帽/魔法石）
+- [ ] Ink 第一章剧情（占位脚本 + EXTERNAL 函数注册）
+- [ ] DialogueManager 接入 Ink 运行时（依赖 Godot Ink 插件）
 
 ---
 

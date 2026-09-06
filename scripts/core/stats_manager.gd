@@ -40,6 +40,10 @@ func _initialize_stats() -> void:
 func get_stat(stat_id: String) -> float:
 	return _stats.get(stat_id, 0.0)
 
+func get_stat_max(stat_id: String) -> float:
+	var def: Dictionary = DataLoader.get_stat_def(stat_id)
+	return def.get("max", 100.0)
+
 func set_stat(stat_id: String, value: float) -> void:
 	if not _stats.has(stat_id):
 		push_warning("[StatsManager] 未定义的属性: " + stat_id)

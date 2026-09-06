@@ -12,6 +12,7 @@ var _locations: Dictionary = {}
 var _items: Dictionary = {}
 var _stats_def: Dictionary = {}
 var _appearance: Dictionary = {}
+var _houses: Dictionary = {}
 
 ## 就绪标志
 var is_loaded: bool = false
@@ -36,12 +37,14 @@ func load_all_data() -> void:
 	_items      = _load_json("res://data/items.json")
 	_stats_def  = _load_json("res://data/stats_def.json")
 	_appearance = _load_json("res://data/appearance.json")
+	_houses     = _load_json("res://data/houses.json")
 	
 	if _characters.is_empty(): errors.append("characters.json")
 	if _events.is_empty():     errors.append("events.json")
 	if _locations.is_empty():   errors.append("locations.json")
 	if _items.is_empty():       errors.append("items.json")
 	if _stats_def.is_empty():  errors.append("stats_def.json")
+	if _houses.is_empty():     errors.append("houses.json")
 	
 	if errors.is_empty():
 		is_loaded = true
@@ -93,6 +96,9 @@ func get_stats_def_data() -> Dictionary:
 func get_appearance_data() -> Dictionary:
 	return _appearance
 
+func get_houses_data() -> Dictionary:
+	return _houses
+
 ## 根据 ID 获取单条数据（便捷封装）
 func get_character(char_id: String) -> Dictionary:
 	var chars: Array = _characters.get("characters", [])
@@ -127,4 +133,11 @@ func get_stat_def(stat_id: String) -> Dictionary:
 	for s: Dictionary in stats:
 		if s.get("stat_id") == stat_id:
 			return s
+	return {}
+
+func get_house(house_id: String) -> Dictionary:
+	var houses: Array = _houses.get("houses", [])
+	for h: Dictionary in houses:
+		if h.get("house_id") == house_id:
+			return h
 	return {}

@@ -1,0 +1,49 @@
+{
+  "_comment": "四大学院定义（houses.json）",
+  "houses": [
+    {
+      "house_id": "house_gryffindor",
+      "name_key": "name_house_gryffindor",
+      "founder_key": "name_founder_gryffindor",
+      "animal_key": "animal_gryffindor",
+      "colors": ["crimson", "gold"],
+      "traits": ["courage", "bravery", "nerve", "chivalry"],
+      "head_key": "name_professor_mcgonagall",
+      "ghost_key": "name_ghost_nearly_headless_nick",
+      "element": "fire"
+    },
+    {
+      "house_id": "house_slytherin",
+      "name_key": "name_house_slytherin",
+      "founder_key": "name_founder_slytherin",
+      "animal_key": "animal_slytherin",
+      "colors": ["green", "silver"],
+      "traits": ["ambition", "cunning", "leadership", "resourcefulness"],
+      "head_key": "name_professor_snape",
+      "ghost_key": "name_ghost_blood_baron",
+      "element": "water"
+    },
+    {
+      "house_id": "house_ravenclaw",
+      "name_key": "name_house_ravenclaw",
+      "founder_key": "name_founder_ravenclaw",
+      "animal_key": "animal_ravenclaw",
+      "colors": ["blue", "bronze"],
+      "traits": ["wisdom", "wit", "creativity", "learning"],
+      "head_key": "name_professor_flitwick",
+      "ghost_key": "name_ghost_grey_lady",
+      "element": "air"
+    },
+    {
+      "house_id": "house_hufflepuff",
+      "name_key": "name_house_hufflepuff",
+      "founder_key": "name_founder_hufflepuff",
+      "animal_key": "animal_hufflepuff",
+      "colors": ["yellow", "black"],
+      "traits": ["hard_work", "patience", "justice", "loyalty"],
+      "head_key": "name_professor_sprout",
+      "ghost_key": "name_ghost_fat_friar",
+      "element": "earth"
+    }
+  ]
+}
