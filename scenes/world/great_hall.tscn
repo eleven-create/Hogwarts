@@ -1,87 +1,177 @@
-[gd_scene load_steps=6 format=3 uid="uid://great_hall_scene_001"]
-
-[ext_resource type="Script" path="res://scripts/systems/player_movement.gd" id="1_player"]
-[ext_resource type="PackedScene" uid="uid://stats_panel_001" path="res://scenes/ui/ui_stats_panel.tscn" id="2_stats"]
-[ext_resource type="PackedScene" uid="uid://time_indicator_001" path="res://scenes/ui/ui_time_indicator.tscn" id="3_time"]
-[ext_resource type="PackedScene" uid="uid://inventory_panel_001" path="res://scenes/ui/ui_inventory_panel.tscn" id="4_inv"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
-size = Vector2(200, 50)
-
-; 大礼堂场景（great_hall.tscn）
-; 食堂+课程+社交+主线：北→走廊，南→户外场地
-[node name="GreatHall" type="Node2D"]
-
-[node name="RoomBackground" type="ColorRect" parent="."]
-offset_right = 1280.0
-offset_bottom = 720.0
-color = Color(0.25, 0.18, 0.1, 1.0)
-
-[node name="LocationLabel" type="Label" parent="."]
-offset_left = 540.0
-offset_top = 20.0
-offset_right = 740.0
-offset_bottom = 50.0
-text = "大礼堂"
-horizontal_alignment = 1
-
-[node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(640, 400)
-script = ExtResource("1_player")
-
-[node name="Body" type="ColorRect" parent="Player"]
-offset_left = -10.0
-offset_top = -20.0
-offset_right = 10.0
-offset_bottom = 0.0
-color = Color(0.9, 0.7, 0.2, 1.0)
-
-; 北出口 → 走廊
-[node name="ExitArea_loc_corridor" type="Area2D" parent="."]
-position = Vector2(640, 50)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea_loc_corridor"]
-shape = SubResource("RectangleShape2D_exit")
-
-[node name="ExitHintArrow" type="Label" parent="ExitArea_loc_corridor"]
-offset_left = -60.0
-offset_top = -10.0
-offset_right = 60.0
-offset_bottom = 10.0
-text = "↑ 走廊"
-horizontal_alignment = 1
-visible = false
-
-; 南出口 → 户外场地
-[node name="ExitArea_loc_grounds" type="Area2D" parent="."]
-position = Vector2(640, 670)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea_loc_grounds"]
-shape = SubResource("RectangleShape2D_exit")
-
-[node name="ExitHintArrow" type="Label" parent="ExitArea_loc_grounds"]
-offset_left = -60.0
-offset_top = -10.0
-offset_right = 60.0
-offset_bottom = 10.0
-text = "↓ 户外场地"
-horizontal_alignment = 1
-visible = false
-
-[node name="ExitHint" type="Label" parent="."]
-offset_left = 490.0
-offset_top = 640.0
-offset_right = 790.0
-offset_bottom = 680.0
-text = "按 E 离开"
-horizontal_alignment = 1
-visible = false
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 10
-
-[node name="StatsPanel" parent="CanvasLayer" instance=ExtResource("2_stats")]
-
-[node name="TimeIndicator" parent="CanvasLayer" instance=ExtResource("3_time")]
-
-[node name="InventoryPanel" parent="CanvasLayer" instance=ExtResource("4_inv")]
+[gd_scene load_steps=8 format=3 uid="uid://great_hall_scene_001"]
+
+[ext_resource type="Script" path="res://scripts/systems/player_movement.gd" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://stats_panel_001" path="res://scenes/ui/ui_stats_panel.tscn" id="2_stats"]
+[ext_resource type="PackedScene" uid="uid://time_indicator_001" path="res://scenes/ui/ui_time_indicator.tscn" id="3_time"]
+[ext_resource type="PackedScene" uid="uid://inventory_panel_001" path="res://scenes/ui/ui_inventory_panel.tscn" id="4_inv"]
+[ext_resource type="PackedScene" uid="uid://dialogue_panel_001" path="res://scenes/ui/ui_dialogue_panel.tscn" id="5_dialogue"]
+[ext_resource type="Script" path="res://scripts/systems/npc.gd" id="6_npc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
+size = Vector2(200, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_npc"]
+size = Vector2(80, 80)
+
+; 大礼堂场景（great_hall.tscn）
+; 食堂+课程+社交+主线：北→走廊，南→户外场地
+[node name="GreatHall" type="Node2D"]
+
+[node name="RoomBackground" type="ColorRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.25, 0.18, 0.1, 1.0)
+
+[node name="LocationLabel" type="Label" parent="."]
+offset_left = 540.0
+offset_top = 20.0
+offset_right = 740.0
+offset_bottom = 50.0
+text = "大礼堂"
+horizontal_alignment = 1
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(640, 400)
+script = ExtResource("1_player")
+
+[node name="Body" type="ColorRect" parent="Player"]
+offset_left = -10.0
+offset_top = -20.0
+offset_right = 10.0
+offset_bottom = 0.0
+color = Color(0.9, 0.7, 0.2, 1.0)
+
+; === 三个 NPC 角色（带 E 键互动）===
+
+[node name="NPC_hermione" type="Area2D" parent="."]
+position = Vector2(400, 350)
+script = ExtResource("6_npc")
+char_id = "char_hermione"
+event_id = "evt_great_hall_meal"
+ink_knot = "event_great_hall_meal"
+body_color = Color(0.2, 0.6, 0.9, 1.0)
+
+[node name="Body" type="ColorRect" parent="NPC_hermione"]
+offset_left = -20.0
+offset_top = -30.0
+offset_right = 20.0
+offset_bottom = 0.0
+color = Color(0.2, 0.6, 0.9, 1.0)
+
+[node name="BodyHint" type="Label" parent="NPC_hermione"]
+offset_left = -60.0
+offset_top = -55.0
+offset_right = 60.0
+offset_bottom = -35.0
+text = "赫敏"
+horizontal_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC_hermione"]
+shape = SubResource("RectangleShape2D_npc")
+
+[node name="NPC_draco" type="Area2D" parent="."]
+position = Vector2(640, 350)
+script = ExtResource("6_npc")
+char_id = "char_draco"
+event_id = "evt_great_hall_meal"
+ink_knot = "event_great_hall_meal"
+body_color = Color(0.4, 0.7, 0.3, 1.0)
+
+[node name="Body" type="ColorRect" parent="NPC_draco"]
+offset_left = -20.0
+offset_top = -30.0
+offset_right = 20.0
+offset_bottom = 0.0
+color = Color(0.4, 0.7, 0.3, 1.0)
+
+[node name="BodyHint" type="Label" parent="NPC_draco"]
+offset_left = -60.0
+offset_top = -55.0
+offset_right = 60.0
+offset_bottom = -35.0
+text = "德拉科"
+horizontal_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC_draco"]
+shape = SubResource("RectangleShape2D_npc")
+
+[node name="NPC_harry" type="Area2D" parent="."]
+position = Vector2(880, 350)
+script = ExtResource("6_npc")
+char_id = "char_harry"
+event_id = "evt_great_hall_meal"
+ink_knot = "event_great_hall_meal"
+body_color = Color(0.9, 0.4, 0.3, 1.0)
+
+[node name="Body" type="ColorRect" parent="NPC_harry"]
+offset_left = -20.0
+offset_top = -30.0
+offset_right = 20.0
+offset_bottom = 0.0
+color = Color(0.9, 0.4, 0.3, 1.0)
+
+[node name="BodyHint" type="Label" parent="NPC_harry"]
+offset_left = -60.0
+offset_top = -55.0
+offset_right = 60.0
+offset_bottom = -35.0
+text = "哈利"
+horizontal_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC_harry"]
+shape = SubResource("RectangleShape2D_npc")
+
+; === 出口 ===
+
+; 北出口 → 走廊
+[node name="ExitArea_loc_corridor" type="Area2D" parent="."]
+position = Vector2(640, 50)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea_loc_corridor"]
+shape = SubResource("RectangleShape2D_exit")
+
+[node name="ExitHintArrow" type="Label" parent="ExitArea_loc_corridor"]
+offset_left = -60.0
+offset_top = -10.0
+offset_right = 60.0
+offset_bottom = 10.0
+text = "↑ 走廊"
+horizontal_alignment = 1
+visible = false
+
+; 南出口 → 户外场地
+[node name="ExitArea_loc_grounds" type="Area2D" parent="."]
+position = Vector2(640, 670)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea_loc_grounds"]
+shape = SubResource("RectangleShape2D_exit")
+
+[node name="ExitHintArrow" type="Label" parent="ExitArea_loc_grounds"]
+offset_left = -60.0
+offset_top = -10.0
+offset_right = 60.0
+offset_bottom = 10.0
+text = "↓ 户外场地"
+horizontal_alignment = 1
+visible = false
+
+[node name="ExitHint" type="Label" parent="."]
+offset_left = 490.0
+offset_top = 640.0
+offset_right = 790.0
+offset_bottom = 680.0
+text = "按 E 离开"
+horizontal_alignment = 1
+visible = false
+
+; === UI 层 ===
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="StatsPanel" parent="CanvasLayer" instance=ExtResource("2_stats")]
+
+[node name="TimeIndicator" parent="CanvasLayer" instance=ExtResource("3_time")]
+
+[node name="InventoryPanel" parent="CanvasLayer" instance=ExtResource("4_inv")]
+
+[node name="DialoguePanel" parent="CanvasLayer" instance=ExtResource("5_dialogue")]

@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=3 uid="uid://dialogue_panel_001"]
+
+[ext_resource type="Script" path="res://scripts/ui/ui_dialogue_panel.gd" id="1_dialogue"]
+
+; 通用对话面板（DialogueUI）
+; 底部黑底白字对话框 + 最多 4 个选项按钮
+; 由 DialogueManager 信号驱动
+[node name="DialoguePanel" type="CanvasLayer"]
+layer = 20
+visible = false
+script = ExtResource("1_dialogue")
+
+[node name="Box" type="PanelContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -180.0
+offset_right = -40.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Margin" type="MarginContainer" parent="Box"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="Box/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SpeakerLabel" type="Label" parent="Box/Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "旁白"
+
+[node name="TextLabel" type="RichTextLabel" parent="Box/Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+text = "..."
+fit_content = true
+scroll_active = false
+custom_minimum_size = Vector2(0, 60)
+
+[node name="HintLabel" type="Label" parent="Box/Margin/VBox"]
+layout_mode = 2
+text = "按 [E] / [Space] 继续"
+modulate = Color(0.7, 0.7, 0.7, 1.0)
+horizontal_alignment = 2
+
+[node name="ChoicesContainer" type="VBoxContainer" parent="Box/Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4

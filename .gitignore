@@ -43,3 +43,8 @@ desktop.ini
 *.log
 *.save
 save_*/
+
+# 测试脚本（开发用，不提交）
+test_*.gd
+test_*.gd.uid
+

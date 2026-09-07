@@ -5,6 +5,9 @@
     <RootNamespace>HarryPotter</RootNamespace>
   </PropertyGroup>
 
+  <!-- GodotInk: 自动下载 inklecate + 引用 ink runtime -->
+  <Import Project="addons\GodotInk\GodotInk.props" />
+
   <!-- 排除 GodotMCP-master/ 目录（独立项目，不属于主项目）-->
   <ItemGroup>
     <Compile Remove="GodotMCP-master/**/*.cs" />

@@ -67,7 +67,22 @@ func get_next_event() -> Dictionary:
 
 func start_event(event_id: String) -> void:
 	event_triggered.emit(event_id)
-	## TODO: 通知 DialogueManager 加载对应 ink_knot
+	var evt: Dictionary = DataLoader.get_event(event_id)
+	if evt.is_empty():
+		push_warning("[EventManager] 找不到事件: " + event_id)
+		return
+	var ink_knot: String = evt.get("ink_knot", "")
+	if ink_knot.is_empty():
+		push_warning("[EventManager] 事件 %s 缺少 ink_knot" % event_id)
+		return
+	# 委托 DialogueManager 启动 ink
+	if DialogueManager:
+		DialogueManager.start_story_from_file(ink_knot, event_id)
+
+## 由玩家/NPC 主动触发事件（绕过位置/条件检查）
+func trigger_event(event_id: String) -> void:
+	print("[EventManager] 手动触发: ", event_id)
+	start_event(event_id)
 
 func complete_event(event_id: String) -> void:
 	_event_history.append(event_id)
