@@ -1,5 +1,5 @@
 {
-  "_comment": "物品定义表（items.json）",
+  "_comment": "物品定义表（items.json）— MVP 占位：基础装备与消耗品",
   "_field_doc": {
     "item_id": "全局唯一 ID，建议 item_xxx 格式",
     "name_key": "显示名 i18n key",
@@ -7,10 +7,101 @@
     "type": "equipment / consumable / quest / currency",
     "icon": "图标路径（assets/sprites/items/xxx.png）",
     "effects": [
-      {"target": "stat_id / affection", "op": "add / set / mult", "value": 数值, "target_id": "角色ID（affection时必填）"}
+      {"target": "stat_id", "op": "add", "value": 5}
     ],
     "stackable": "是否可堆叠",
     "max_stack": "堆叠上限（堆叠时必填）"
   },
-  "items": []
+  "items": [
+    {
+      "item_id": "item_wand_basic",
+      "name_key": "name_item_wand_basic",
+      "desc_key": "desc_item_wand_basic",
+      "type": "equipment",
+      "icon": "res://assets/sprites/items/wand_basic.png",
+      "effects": [
+        {"target": "magic_power", "op": "add", "value": 1}
+      ],
+      "stackable": false,
+      "max_stack": 1
+    },
+    {
+      "item_id": "item_school_robe",
+      "name_key": "name_item_school_robe",
+      "desc_key": "desc_item_school_robe",
+      "type": "equipment",
+      "icon": "res://assets/sprites/items/robe_school.png",
+      "effects": [],
+      "stackable": false,
+      "max_stack": 1
+    },
+    {
+      "item_id": "item_textbook",
+      "name_key": "name_item_textbook",
+      "desc_key": "desc_item_textbook",
+      "type": "consumable",
+      "icon": "res://assets/sprites/items/book.png",
+      "effects": [
+        {"target": "intelligence", "op": "add", "value": 2}
+      ],
+      "stackable": true,
+      "max_stack": 99
+    },
+    {
+      "item_id": "item_potion_heal",
+      "name_key": "name_item_potion_heal",
+      "desc_key": "desc_item_potion_heal",
+      "type": "consumable",
+      "icon": "res://assets/sprites/items/potion_red.png",
+      "effects": [
+        {"target": "energy", "op": "add", "value": 30}
+      ],
+      "stackable": true,
+      "max_stack": 99
+    },
+    {
+      "item_id": "item_chocolate",
+      "name_key": "name_item_chocolate",
+      "desc_key": "desc_item_chocolate",
+      "type": "consumable",
+      "icon": "res://assets/sprites/items/chocolate.png",
+      "effects": [
+        {"target": "mood", "op": "add", "value": 10}
+      ],
+      "stackable": true,
+      "max_stack": 99
+    },
+    {
+      "item_id": "item_sorting_hat",
+      "name_key": "name_item_sorting_hat",
+      "desc_key": "desc_item_sorting_hat",
+      "type": "quest",
+      "icon": "res://assets/sprites/items/hat.png",
+      "effects": [],
+      "stackable": false,
+      "max_stack": 1
+    },
+    {
+      "item_id": "item_invisibility_cloak",
+      "name_key": "name_item_invisibility_cloak",
+      "desc_key": "desc_item_invisibility_cloak",
+      "type": "equipment",
+      "icon": "res://assets/sprites/items/cloak.png",
+      "effects": [
+        {"target": "cunning", "op": "add", "value": 3}
+      ],
+      "stackable": false,
+      "max_stack": 1
+    },
+    {
+      "item_id": "item_philosophers_stone",
+      "name_key": "name_item_philosophers_stone",
+      "desc_key": "desc_item_philosophers_stone",
+      "type": "quest",
+      "icon": "res://assets/sprites/items/stone.png",
+      "effects": [],
+      "stackable": false,
+      "max_stack": 1
+    }
+  ]
 }

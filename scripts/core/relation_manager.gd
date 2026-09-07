@@ -15,7 +15,7 @@ const DEFAULT_AFFECTION: int = 0
 ## 信号
 signal affection_changed(char_id: String, old_value: int, new_value: int)
 signal affection_maxed(char_id: String)  ## 好感度满触发某些特殊事件
-signal relationship_established(char_id: String, level: int)
+signal _relationship_established(char_id: String, level: int)  ## 预留：关系等级跨越事件
 
 ## 关系等级阈值
 const RELATION_LEVELS: Array[int] = [0, 20, 40, 60, 80, 100]

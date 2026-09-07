@@ -85,7 +85,7 @@ func get_current_time_slot_name() -> String:
 		TimeSlot.NIGHT:     return "night"
 	return "unknown"
 
-func get_schedule_for_slot(slot: TimeSlot) -> String:
+func get_schedule_for_slot(_slot: TimeSlot) -> String:
 	## TODO: 从 schedule 配置表查询
 	return ""
 

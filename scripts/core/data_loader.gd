@@ -29,7 +29,6 @@ func _ready() -> void:
 
 ## 加载所有配置数据
 func load_all_data() -> void:
-	var success: bool = true
 	var errors: Array[String] = []
 	
 	_characters = _load_json("res://data/characters.json")

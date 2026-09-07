@@ -72,7 +72,6 @@ func _on_exit_entered(body: Node2D, area: Area2D) -> void:
 	var target_loc: String = _exit_targets.get(area, "")
 	if exit_hint and target_loc != "":
 		var loc: Dictionary = DataLoader.get_location(target_loc)
-		var loc_name_key: String = loc.get("name_key", "")
 		var loc_id: String = loc.get("loc_id", "未知地点")
 		exit_hint.text = "按 E 前往 " + loc_id
 		exit_hint.visible = true

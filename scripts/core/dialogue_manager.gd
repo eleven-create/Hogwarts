@@ -8,11 +8,15 @@ extends Node
 ## Ink 运行状态
 var _current_knot: String = ""
 var _is_running: bool = false
-var _story = null  ## TODO: 替换为实际 Ink 运行时对象
+## 预留：Ink 运行时对象（待 Godot Ink 插件接入）
+var _story: Object = null
 
 ## 信号
 signal dialogue_started(knot: String)
+## 以下信号供未来 DialogueUI 监听使用（公开 API），目前无人连接
+@warning_ignore("unused_signal")
 signal dialogue_line(line: String, speaker: String)
+@warning_ignore("unused_signal")
 signal dialogue_choices(choices: Array[String])
 signal dialogue_finished(event_id: String)
 signal ink_state_changed(state: String)
@@ -30,7 +34,7 @@ func _register_external_functions() -> void:
 
 ## ---- Ink 生命周期 ----
 
-func start_dialogue(ink_knot: String, event_id: String = "") -> void:
+func start_dialogue(ink_knot: String, _event_id: String = "") -> void:
 	if _is_running:
 		push_warning("[DialogueManager] 对话已在运行中")
 		return
@@ -45,7 +49,7 @@ func continue_dialogue() -> void:
 		return
 	## TODO: 获取下一行文本，触发 dialogue_line 或 dialogue_choices
 
-func select_choice(choice_index: int) -> void:
+func select_choice(_choice_index: int) -> void:
 	if not _is_running:
 		return
 	## TODO: 将玩家选择传给 Ink 运行时
@@ -79,7 +83,7 @@ func get_ink_state() -> String:
 	## TODO: 返回当前 Ink 状态的序列化字符串
 	return ""
 
-func set_ink_state(state: String) -> void:
+func set_ink_state(_state: String) -> void:
 	## TODO: 从序列化字符串恢复 Ink 状态
 	pass
 
