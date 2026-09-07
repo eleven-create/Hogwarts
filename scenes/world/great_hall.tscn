@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://great_hall_scene_001"]
+[gd_scene load_steps=10 format=3 uid="uid://great_hall_scene_001"]
 
 [ext_resource type="Script" path="res://scripts/systems/player_movement.gd" id="1_player"]
 [ext_resource type="PackedScene" uid="uid://stats_panel_001" path="res://scenes/ui/ui_stats_panel.tscn" id="2_stats"]
@@ -13,8 +13,15 @@ size = Vector2(200, 50)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_npc"]
 size = Vector2(80, 80)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
+size = Vector2(20, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(1280, 20)
+
 ; 大礼堂场景（great_hall.tscn）
 ; 食堂+课程+社交+主线：北→走廊，南→户外场地
+; 加了 4 面墙 + 玩家碰撞 + 出口箭头 + 3 个 NPC
 [node name="GreatHall" type="Node2D"]
 
 [node name="RoomBackground" type="ColorRect" parent="."]
@@ -30,8 +37,30 @@ offset_bottom = 50.0
 text = "大礼堂"
 horizontal_alignment = 1
 
+; === 4 面墙 ===
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="WallTop" type="CollisionShape2D" parent="Walls"]
+position = Vector2(640, -10)
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallBottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2(640, 730)
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallLeft" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-10, 360)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRight" type="CollisionShape2D" parent="Walls"]
+position = Vector2(1290, 360)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_wall")
+
+; === 玩家 ===
 [node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(640, 400)
+position = Vector2(640, 500)
 script = ExtResource("1_player")
 
 [node name="Body" type="ColorRect" parent="Player"]
@@ -41,10 +70,14 @@ offset_right = 10.0
 offset_bottom = 0.0
 color = Color(0.9, 0.7, 0.2, 1.0)
 
-; === 三个 NPC 角色（带 E 键互动）===
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_player")
+
+; === 三个 NPC（带 E 键互动）===
 
 [node name="NPC_hermione" type="Area2D" parent="."]
-position = Vector2(400, 350)
+position = Vector2(400, 320)
 script = ExtResource("6_npc")
 char_id = "char_hermione"
 event_id = "evt_great_hall_meal"
@@ -70,7 +103,7 @@ horizontal_alignment = 1
 shape = SubResource("RectangleShape2D_npc")
 
 [node name="NPC_draco" type="Area2D" parent="."]
-position = Vector2(640, 350)
+position = Vector2(640, 320)
 script = ExtResource("6_npc")
 char_id = "char_draco"
 event_id = "evt_great_hall_meal"
@@ -96,7 +129,7 @@ horizontal_alignment = 1
 shape = SubResource("RectangleShape2D_npc")
 
 [node name="NPC_harry" type="Area2D" parent="."]
-position = Vector2(880, 350)
+position = Vector2(880, 320)
 script = ExtResource("6_npc")
 char_id = "char_harry"
 event_id = "evt_great_hall_meal"
@@ -120,6 +153,26 @@ horizontal_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NPC_harry"]
 shape = SubResource("RectangleShape2D_npc")
+
+; === 出口指示箭头（始终可见）===
+
+[node name="ExitArrow_up" type="Label" parent="."]
+offset_left = 590.0
+offset_top = 25.0
+offset_right = 690.0
+offset_bottom = 60.0
+text = "▲ 走廊"
+horizontal_alignment = 1
+modulate = Color(1, 1, 0.5, 1)
+
+[node name="ExitArrow_down" type="Label" parent="."]
+offset_left = 580.0
+offset_top = 660.0
+offset_right = 700.0
+offset_bottom = 700.0
+text = "▼ 户外场地"
+horizontal_alignment = 1
+modulate = Color(1, 1, 0.5, 1)
 
 ; === 出口 ===
 

@@ -13,10 +13,14 @@ size = Vector2(200, 50)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bed"]
 size = Vector2(140, 80)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(1280, 20)
+
 ; 宿舍场景（bedroom.tscn）
 ; 玩家用 WASD/方向键移动
 ; - 走到床前按 E：触发"早晨醒来"事件
 ; - 走到下方出口按 E：去走廊
+; 现在加了 4 面墙防止玩家跑出视野
 [node name="Bedroom" type="Node2D"]
 
 [node name="RoomBackground" type="ColorRect" parent="."]
@@ -32,6 +36,28 @@ offset_bottom = 50.0
 text = "格兰芬多宿舍"
 horizontal_alignment = 1
 
+; === 4 面墙（防止玩家出界）===
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="WallTop" type="CollisionShape2D" parent="Walls"]
+position = Vector2(640, -10)
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallBottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2(640, 730)
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallLeft" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-10, 360)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRight" type="CollisionShape2D" parent="Walls"]
+position = Vector2(1290, 360)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_wall")
+
+; 玩家需要碰撞形状
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(640, 400)
 script = ExtResource("1_player")
@@ -43,10 +69,14 @@ offset_right = 10.0
 offset_bottom = 0.0
 color = Color(0.2, 0.4, 0.9, 1.0)
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_bed")
+
 ; === 床（可互动 NPC，触发早晨事件）===
 
 [node name="NPC_bed" type="Area2D" parent="."]
-position = Vector2(640, 250)
+position = Vector2(640, 200)
 script = ExtResource("6_npc")
 display_name_override = "床"
 event_id = "evt_morning_wake"
@@ -70,6 +100,17 @@ horizontal_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NPC_bed"]
 shape = SubResource("RectangleShape2D_bed")
+
+; === 出口指示箭头（始终可见，帮助玩家定位出口）===
+
+[node name="ExitArrow_down" type="Label" parent="."]
+offset_left = 590.0
+offset_top = 660.0
+offset_right = 690.0
+offset_bottom = 700.0
+text = "▼ 走廊"
+horizontal_alignment = 1
+modulate = Color(1, 1, 0.5, 1)
 
 ; === 出口 ===
 

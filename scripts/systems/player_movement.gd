@@ -5,7 +5,7 @@
 extends CharacterBody2D
 
 ## 移动参数
-@export var move_speed: float = 200.0
+@export var move_speed: float = 160.0
 
 ## 输入方向
 var _input_dir: Vector2 = Vector2.ZERO
@@ -28,6 +28,7 @@ func _ready() -> void:
 	_scan_exits()
 	_scan_npcs()
 	GameManager.location_changed.connect(_on_location_changed)
+	_style_exit_hint()
 
 func _physics_process(_delta: float) -> void:
 	_input_dir = Vector2(
@@ -145,6 +146,15 @@ func _on_npc_exited(body: Node, area: Area2D) -> void:
 func _hide_hint() -> void:
 	if exit_hint:
 		exit_hint.visible = false
+
+## 给 ExitHint 加个深色背景和高亮色，更醒目
+func _style_exit_hint() -> void:
+	if exit_hint == null:
+		return
+	exit_hint.modulate = Color(1, 1, 0.4)  # 黄色高亮
+	exit_hint.add_theme_font_size_override("font_size", 22)
+	exit_hint.add_theme_color_override("font_outline_color", Color.BLACK)
+	exit_hint.add_theme_constant_override("outline_size", 4)
 
 func _on_location_changed(_loc_id: String) -> void:
 	await get_tree().process_frame

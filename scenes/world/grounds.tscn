@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://grounds_scene_001"]
+[gd_scene load_steps=8 format=3 uid="uid://grounds_scene_001"]
 
 [ext_resource type="Script" path="res://scripts/systems/player_movement.gd" id="1_player"]
 [ext_resource type="PackedScene" uid="uid://stats_panel_001" path="res://scenes/ui/ui_stats_panel.tscn" id="2_stats"]
@@ -9,8 +9,15 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
 size = Vector2(200, 50)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
+size = Vector2(20, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(1280, 20)
+
 ; 户外场地场景（grounds.tscn）
 ; 黑湖畔+草地。北出口→大礼堂
+; 加了 4 面墙 + 玩家碰撞 + 出口箭头
 [node name="Grounds" type="Node2D"]
 
 [node name="RoomBackground" type="ColorRect" parent="."]
@@ -26,6 +33,26 @@ offset_bottom = 50.0
 text = "霍格沃茨户外场地"
 horizontal_alignment = 1
 
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="WallTop" type="CollisionShape2D" parent="Walls"]
+position = Vector2(640, -10)
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallBottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2(640, 730)
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallLeft" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-10, 360)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallRight" type="CollisionShape2D" parent="Walls"]
+position = Vector2(1290, 360)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_wall")
+
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(640, 400)
 script = ExtResource("1_player")
@@ -36,6 +63,20 @@ offset_top = -20.0
 offset_right = 10.0
 offset_bottom = 0.0
 color = Color(0.3, 0.9, 0.3, 1.0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_player")
+
+; 出口指示箭头（始终可见）
+[node name="ExitArrow_up" type="Label" parent="."]
+offset_left = 580.0
+offset_top = 20.0
+offset_right = 700.0
+offset_bottom = 60.0
+text = "▲ 返回城堡"
+horizontal_alignment = 1
+modulate = Color(1, 1, 0.5, 1)
 
 ; 北出口 → 大礼堂
 [node name="ExitArea_loc_great_hall" type="Area2D" parent="."]
