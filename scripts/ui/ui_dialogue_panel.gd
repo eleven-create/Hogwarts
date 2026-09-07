@@ -58,7 +58,7 @@ func _on_dialogue_line(speaker: String, text: String) -> void:
 func _resolve_speaker_name(key_or_text: String) -> String:
 	# 如果 key 以 "name_" 开头，走 i18n
 	if key_or_text.begins_with("name_"):
-		var translated: String = tr(key_or_text)
+		var translated: String = DataLoader.i18n(key_or_text)
 		if translated != key_or_text:
 			return translated
 	return key_or_text

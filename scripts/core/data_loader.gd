@@ -14,6 +14,8 @@ var _items: Dictionary = {}
 var _stats_def: Dictionary = {}
 var _appearance: Dictionary = {}
 var _houses: Dictionary = {}
+## i18n 文本表（key -> 当前语言文本）
+var _localization: Dictionary = {}
 
 ## 就绪标志
 var is_loaded: bool = false
@@ -30,7 +32,7 @@ func _ready() -> void:
 ## 加载所有配置数据
 func load_all_data() -> void:
 	var errors: Array[String] = []
-	
+
 	_characters = _load_json("res://data/characters.json")
 	_events     = _load_json("res://data/events.json")
 	_locations  = _load_json("res://data/locations.json")
@@ -38,22 +40,36 @@ func load_all_data() -> void:
 	_stats_def  = _load_json("res://data/stats_def.json")
 	_appearance = _load_json("res://data/appearance.json")
 	_houses     = _load_json("res://data/houses.json")
-	
+
 	if _characters.is_empty(): errors.append("characters.json")
 	if _events.is_empty():     errors.append("events.json")
 	if _locations.is_empty():   errors.append("locations.json")
 	if _items.is_empty():       errors.append("items.json")
 	if _stats_def.is_empty():  errors.append("stats_def.json")
 	if _houses.is_empty():     errors.append("houses.json")
-	
+
+	# 加载本地化（独立容错，不影响数据加载）
+	_localization = _load_json("res://localization/zh_CN.json")
+	if _localization.is_empty():
+		print("[DataLoader] 警告: 本地化文件加载失败，tr() 将返回 key")
+
 	if errors.is_empty():
 		is_loaded = true
-		print("[DataLoader] 全部配置加载完成")
+		print("[DataLoader] 全部配置加载完成（i18n 词条: %d）" % _localization.size())
 		data_loaded.emit()
 	else:
 		var err_msg := "加载失败: " + ", ".join(errors)
 		print("[DataLoader] " + err_msg)
 		data_load_failed.emit(err_msg)
+
+## 本地化查询
+func i18n(key: String) -> String:
+	if key == "" or _localization.is_empty():
+		return key
+	# 过滤掉 _comment / _field_doc / "## ..." 这种非翻译字段
+	if key.begins_with("_") or key.begins_with("##"):
+		return key
+	return _localization.get(key, key)
 
 ## 通用 JSON 加载
 func _load_json(path: String) -> Dictionary:

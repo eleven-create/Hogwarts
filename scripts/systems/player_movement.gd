@@ -87,9 +87,11 @@ func _interact_npc() -> void:
 
 func _change_location() -> void:
 	if _near_exit == null:
+		print("[PlayerMovement] E 键按了但 _near_exit=null (位置:", position, ")")
 		return
 	var target_loc: String = _exit_targets.get(_near_exit, "")
 	if target_loc.is_empty():
+		print("[PlayerMovement] E 键按了但 target_loc 为空")
 		return
 	print("[PlayerMovement] 切换到: ", target_loc)
 	GameManager.change_location(target_loc)
@@ -104,9 +106,9 @@ func _on_exit_entered(body: Node, area: Area2D) -> void:
 	if exit_hint and target_loc != "":
 		var loc: Dictionary = DataLoader.get_location(target_loc)
 		var loc_name: String = loc.get("loc_id", "未知地点")
-		# 走 i18n
+		# 走 i18n（用 DataLoader.tr 而不是全局 tr，因为全局 tr 需要 POT 文件）
 		if loc.has("name_key"):
-			loc_name = tr(loc["name_key"])
+			loc_name = DataLoader.i18n(loc["name_key"])
 		exit_hint.text = "[E] 前往 " + loc_name
 		exit_hint.visible = true
 

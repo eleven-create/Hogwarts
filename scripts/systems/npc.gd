@@ -34,7 +34,7 @@ func _update_hint() -> void:
 		var char: Dictionary = DataLoader.get_character(char_id)
 		var name_key: String = char.get("display_name_key", "")
 		if name_key != "" and TranslationServer:
-			name_str = tr(name_key)
+			name_str = DataLoader.i18n(name_key)
 	if name_str == "":
 		name_str = "???"
 	label_hint.text = name_str
