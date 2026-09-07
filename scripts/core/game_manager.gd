@@ -71,6 +71,11 @@ func start_new_game() -> void:
 	## 初始化玩家位置为宿舍
 	current_location = "loc_bedroom"
 	location_changed.emit(current_location)
+	## 清空背包
+	InventoryManager.clear_inventory()
+	## 初始装备：魔杖 + 校袍
+	InventoryManager.add_item("item_wand_basic")
+	InventoryManager.add_item("item_school_robe")
 	## TODO: 重置所有系统状态
 	## TODO: 加载初始存档
 	change_scene("res://scenes/world/bedroom.tscn")

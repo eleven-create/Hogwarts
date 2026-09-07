@@ -61,6 +61,7 @@ func _collect_save_data() -> Dictionary:
 		"relations": RelationManager.serialize(),
 		"flags": FlagManager.serialize(),
 		"events": EventManager.serialize(),
+		"inventory": InventoryManager.serialize(),
 		## TODO: 背包、换装等数据
 		"ink_state": DialogueManager.get_ink_state()
 	}
@@ -112,7 +113,8 @@ func _apply_save_data(data: Dictionary) -> void:
 	RelationManager.deserialize(data.get("relations", {}))
 	FlagManager.deserialize(data.get("flags", {}))
 	EventManager.deserialize(data.get("events", {}))
-	
+	InventoryManager.deserialize(data.get("inventory", {}))
+
 	DialogueManager.set_ink_state(data.get("ink_state", ""))
 
 ## ---- 工具 ----

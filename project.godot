@@ -31,6 +31,7 @@ FlagManager="*res://scripts/core/flag_manager.gd"
 EventManager="*res://scripts/core/event_manager.gd"
 DialogueManager="*res://scripts/core/dialogue_manager.gd"
 SaveManager="*res://scripts/core/save_manager.gd"
+InventoryManager="*res://scripts/core/inventory_manager.gd"
 
 [display]
 

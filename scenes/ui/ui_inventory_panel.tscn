@@ -1,0 +1,64 @@
+[gd_scene load_steps=2 format=3 uid="uid://inventory_panel_001"]
+
+[ext_resource type="Script" path="res://scripts/ui/ui_inventory_panel.gd" id="1_inv"]
+
+## 背包面板（默认隐藏，按 B 键切换显示）
+[node name="UIInventoryPanel" type="PanelContainer"]
+visible = false
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 980.0
+offset_top = 16.0
+offset_right = 1264.0
+offset_bottom = -16.0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "背包"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+## 物品列表（最多显示 8 个槽位）
+[node name="ItemList" type="ItemList" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(240, 220)
+layout_mode = 2
+size_flags_vertical = 3
+allow_reselect = true
+auto_height = false
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+## 操作按钮区
+[node name="HBoxButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="UseButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "使用"
+
+[node name="DropButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+disabled = true
+text = "丢弃"
+
+[node name="HintLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "提示：按 B 键打开/关闭背包"
+horizontal_alignment = 1

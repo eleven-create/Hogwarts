@@ -89,3 +89,6 @@ layer = 10
 
 [node name="TimeIndicator" parent="CanvasLayer" instance=ExtResource("res://scenes/ui/ui_time_indicator.tscn")]
 layer = 10
+
+[node name="InventoryPanel" parent="CanvasLayer" instance=ExtResource("res://scenes/ui/ui_inventory_panel.tscn")]
+layer = 11
