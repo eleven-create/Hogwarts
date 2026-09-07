@@ -1,0 +1,14 @@
+<Project Sdk="Godot.NET.Sdk/4.7.2">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <RootNamespace>HarryPotter</RootNamespace>
+  </PropertyGroup>
+
+  <!-- 排除 GodotMCP-master/ 目录（独立项目，不属于主项目）-->
+  <ItemGroup>
+    <Compile Remove="GodotMCP-master/**/*.cs" />
+    <None Remove="GodotMCP-master/**" />
+    <EmbeddedResource Remove="GodotMCP-master/**" />
+  </ItemGroup>
+</Project>

@@ -1,7 +1,6 @@
 ## ui_main_menu.gd
 ## 职责：主菜单界面 — 新游戏/继续/退出
 ## 依赖：GameManager, SaveManager
-class_name UIMainMenu
 extends Control
 
 @onready var new_game_button: Button = $VBoxContainer/NewGameButton

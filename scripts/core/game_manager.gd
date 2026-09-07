@@ -67,7 +67,6 @@ func resume_game() -> void:
 
 func start_new_game() -> void:
 	is_new_game = true
-	current_location = ""
 	## 初始化玩家位置为宿舍
 	current_location = "loc_bedroom"
 	location_changed.emit(current_location)
@@ -78,12 +77,32 @@ func start_new_game() -> void:
 	InventoryManager.add_item("item_school_robe")
 	## TODO: 重置所有系统状态
 	## TODO: 加载初始存档
+	## 关闭主菜单（如果是当前场景）
+	_close_main_menu_if_open()
 	change_scene("res://scenes/world/bedroom.tscn")
 	set_game_state(GameState.PLAYING)
 
 func continue_game() -> void:
-	## TODO: 从存档加载
-	pass
+	## 从存档加载数据并进入卧室
+	if SaveManager.load_game(0):
+		is_new_game = false
+		_close_main_menu_if_open()
+		current_location = "loc_bedroom"
+		change_scene("res://scenes/world/bedroom.tscn")
+		set_game_state(GameState.PLAYING)
+	else:
+		push_warning("[GameManager] 没有可加载的存档")
+
+## 关闭主菜单（如果它在当前场景里）
+func _close_main_menu_if_open() -> void:
+	var tree: SceneTree = get_tree()
+	if tree == null or tree.current_scene == null:
+		return
+	## 主菜单场景的根节点就是 Control，找到就 queue_free
+	var root: Node = tree.current_scene
+	if root.scene_file_path.ends_with("ui_main_menu.tscn"):
+		print("[GameManager] 关闭主菜单")
+		root.queue_free()
 
 ## ---- 全局工具 ----
 

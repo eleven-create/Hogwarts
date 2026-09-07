@@ -1,36 +1,45 @@
-# Godot-specific
+# Godot 4+ specific ignores
 .godot/
-*.import
-
-# Build outputs
-bin/
-
-# OS / IDE
-.DS_Store
-Thumbs.db
-*.swp
-*.swo
-*~
-
-# Godot editor
-*.bak
-*.orig
-*.log
-
-# User-specific
-user://*.png
-user://*.wav
-user://*.ogg
-user://*.flac
-user://*.gltf
-user://*.glb
-user://*.obj
-user://*.hdr
-
-# Export
-export/
+.import/
+export.cfg
 export_presets.cfg
 
-# Godot 4 cache
-.godot_cache/
-*.uid
+# .NET / C# build artifacts
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.pdb
+*.dll
+*.exe
+*.csproj.user
+
+# Backup / temporary files
+*.old
+*.bak
+*~
+*.tmp
+*.temp
+
+# Godot MCP source (downloaded separately, do NOT commit)
+GodotMCP-master/
+addons/godot-mcp/.import/
+addons/godot-mcp/bin/
+addons/godot-mcp/obj/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local saves / logs
+*.log
+*.save
+save_*/

@@ -1,7 +1,6 @@
 ## ui_inventory_panel.gd
 ## 职责：背包 UI 显示 — 列表展示、可使用/丢弃物品
 ## 依赖：InventoryManager
-class_name UIInventoryPanel
 extends PanelContainer
 
 @onready var item_list: ItemList = $MarginContainer/VBoxContainer/ItemList

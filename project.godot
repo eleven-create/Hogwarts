@@ -17,7 +17,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="Hogwarts Life"
 config/description="像素风 2D 学院生活模拟游戏（哈利波特同人，非商业）"
 run/main_scene="res://scenes/ui/ui_main_menu.tscn"
-config/features=PackedStringArray("4.7", "Forward Plus")
+config/features=PackedStringArray("4.7", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -38,6 +38,14 @@ InventoryManager="*res://scripts/core/inventory_manager.gd"
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="viewport"
+
+[dotnet]
+
+project/assembly_name="Hogwarts Life"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot-mcp/plugin.cfg")
 
 [input]
 

@@ -1,121 +1,87 @@
-[gd_scene load_steps=4 format=3 uid="uid://corridor_scene_001"]
-
-[ext_resource type="Script" path="res://scripts/systems/player_movement.gd" id="1_player"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_exup"]
-size = Vector2(200, 50)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_exdown"]
-size = Vector2(200, 50)
-
-## 走廊场景（corridor.tscn）
-## 中央走廊，可上至宿舍、下至大礼堂
-## 可触发 evt_draco_corridor（德拉科偶遇）
-[node name="Corridor" type="Node2D"]
-
-## 玩家
-[node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(640, 400)
-script = ExtResource("1_player")
-
-[node name="Body" type="ColorRect" parent="Player"]
-offset_left = -10.0
-offset_top = -20.0
-offset_right = 10.0
-offset_bottom = 0.0
-color = Color(0.5, 0.5, 0.7, 1.0)  ## 灰蓝色（走廊主题）
-
-## 背景（深灰代表城堡走廊的石墙）
-[node name="RoomBackground" type="ColorRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color(0.3, 0.3, 0.35, 1.0)  ## 深灰色
-
-## 顶部场景名
-[node name="LocationLabel" type="Label" parent="."]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -100.0
-offset_top = 20.0
-offset_right = 100.0
-offset_bottom = 50.0
-grow_horizontal = 2
-text = "城堡走廊"
-horizontal_alignment = 1
-
-## 上出口 → 宿舍
-[node name="ExitArea_loc_bedroom" type="Area2D" parent="."]
-position = Vector2(640, 50)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea_loc_bedroom"]
-shape = SubResource("RectangleShape2D_exup")
-
-[node name="ExitHintUp" type="Label" parent="ExitArea_loc_bedroom"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -80.0
-offset_top = -10.0
-offset_right = 80.0
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "↑ 宿舍"
-horizontal_alignment = 1
-visible = false
-
-## 下出口 → 大礼堂
-[node name="ExitArea_loc_great_hall" type="Area2D" parent="."]
-position = Vector2(640, 670)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea_loc_great_hall"]
-shape = SubResource("RectangleShape2D_exdown")
-
-[node name="ExitHintDown" type="Label" parent="ExitArea_loc_great_hall"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -80.0
-offset_top = -10.0
-offset_right = 80.0
-offset_bottom = 10.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "↓ 大礼堂"
-horizontal_alignment = 1
-visible = false
-
-## 出口提示文字
-[node name="ExitHint" type="Label" parent="."]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -150.0
-offset_top = -80.0
-offset_right = 150.0
-offset_bottom = -40.0
-grow_horizontal = 2
-grow_vertical = 0
-text = "按 E 离开"
-horizontal_alignment = 1
-visible = false
-
-## UI 层
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="StatsPanel" parent="CanvasLayer" instance=ExtResource("res://scenes/ui/ui_stats_panel.tscn")]
-layer = 10
-
-[node name="TimeIndicator" parent="CanvasLayer" instance=ExtResource("res://scenes/ui/ui_time_indicator.tscn")]
-layer = 10
-
-[node name="InventoryPanel" parent="CanvasLayer" instance=ExtResource("res://scenes/ui/ui_inventory_panel.tscn")]
-layer = 11
+[gd_scene load_steps=6 format=3 uid="uid://corridor_scene_001"]
+
+[ext_resource type="Script" path="res://scripts/systems/player_movement.gd" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://stats_panel_001" path="res://scenes/ui/ui_stats_panel.tscn" id="2_stats"]
+[ext_resource type="PackedScene" uid="uid://time_indicator_001" path="res://scenes/ui/ui_time_indicator.tscn" id="3_time"]
+[ext_resource type="PackedScene" uid="uid://inventory_panel_001" path="res://scenes/ui/ui_inventory_panel.tscn" id="4_inv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
+size = Vector2(200, 50)
+
+; 走廊场景（corridor.tscn）
+; 中央走廊：上→宿舍，下→大礼堂
+[node name="Corridor" type="Node2D"]
+
+[node name="RoomBackground" type="ColorRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.3, 0.3, 0.35, 1.0)
+
+[node name="LocationLabel" type="Label" parent="."]
+offset_left = 540.0
+offset_top = 20.0
+offset_right = 740.0
+offset_bottom = 50.0
+text = "城堡走廊"
+horizontal_alignment = 1
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(640, 400)
+script = ExtResource("1_player")
+
+[node name="Body" type="ColorRect" parent="Player"]
+offset_left = -10.0
+offset_top = -20.0
+offset_right = 10.0
+offset_bottom = 0.0
+color = Color(0.5, 0.5, 0.7, 1.0)
+
+; 上出口 → 宿舍
+[node name="ExitArea_loc_bedroom" type="Area2D" parent="."]
+position = Vector2(640, 50)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea_loc_bedroom"]
+shape = SubResource("RectangleShape2D_exit")
+
+[node name="ExitHintArrow" type="Label" parent="ExitArea_loc_bedroom"]
+offset_left = -80.0
+offset_top = -10.0
+offset_right = 80.0
+offset_bottom = 10.0
+text = "↑ 宿舍"
+horizontal_alignment = 1
+visible = false
+
+; 下出口 → 大礼堂
+[node name="ExitArea_loc_great_hall" type="Area2D" parent="."]
+position = Vector2(640, 670)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea_loc_great_hall"]
+shape = SubResource("RectangleShape2D_exit")
+
+[node name="ExitHintArrow" type="Label" parent="ExitArea_loc_great_hall"]
+offset_left = -80.0
+offset_top = -10.0
+offset_right = 80.0
+offset_bottom = 10.0
+text = "↓ 大礼堂"
+horizontal_alignment = 1
+visible = false
+
+[node name="ExitHint" type="Label" parent="."]
+offset_left = 490.0
+offset_top = 640.0
+offset_right = 790.0
+offset_bottom = 680.0
+text = "按 E 离开"
+horizontal_alignment = 1
+visible = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="StatsPanel" parent="CanvasLayer" instance=ExtResource("2_stats")]
+
+[node name="TimeIndicator" parent="CanvasLayer" instance=ExtResource("3_time")]
+
+[node name="InventoryPanel" parent="CanvasLayer" instance=ExtResource("4_inv")]

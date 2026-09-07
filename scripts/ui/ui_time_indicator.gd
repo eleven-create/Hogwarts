@@ -1,7 +1,6 @@
 ## ui_time_indicator.gd
 ## 职责：时间/日期指示器 — 显示当前季节、第几天、时间段，监听 TimeManager 信号刷新
 ## 依赖：TimeManager
-class_name UITimeIndicator
 extends PanelContainer
 
 @onready var date_label: Label = $MarginContainer/VBoxContainer/DateLabel

@@ -1,7 +1,6 @@
 ## ui_stats_panel.gd
 ## 职责：属性面板 — 显示6主属性进度条 + 状态值，监听 StatsManager 信号刷新
 ## 依赖：StatsManager
-class_name UIStatsPanel
 extends PanelContainer
 
 ## 属性 ID -> ProgressBar 映射
