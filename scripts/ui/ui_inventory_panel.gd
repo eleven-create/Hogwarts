@@ -66,19 +66,11 @@ func _on_drop_pressed() -> void:
 	use_button.disabled = true
 	drop_button.disabled = true
 
-## 简易 i18n 查询（TranslationServer 备用）
+## i18n 查询：优先 DataLoader.i18n（加载了 zh_CN.json），fallback 为显示 item_id
 func _lookup_i18n(key: String, fallback: String) -> String:
 	if key.is_empty():
 		return fallback
-	var tr: String = TranslationServer.translate(key)
-	if tr.is_empty() or tr == key:
-		## 尝试直接从 zh_CN.json 读
-		var f := FileAccess.open("res://localization/zh_CN.json", FileAccess.READ)
-		if f != null:
-			var json := JSON.new()
-			json.parse(f.get_as_text())
-			f.close()
-			var data = json.get_data()
-			if data is Dictionary and data.has(key):
-				return String(data[key])
-	return tr if not tr.is_empty() else fallback
+	var result: String = DataLoader.i18n(key)
+	if result != key:
+		return result
+	return fallback

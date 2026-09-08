@@ -67,6 +67,10 @@ func resume_game() -> void:
 
 func start_new_game() -> void:
 	is_new_game = true
+	## 重置所有系统状态
+	EventManager.clear_all_events()
+	FlagManager.clear_all_flags()
+	## RelationManager 和 StatsManager 的数据在 init 时就是空的，这里无需额外处理
 	## 初始化玩家位置为宿舍
 	current_location = "loc_bedroom"
 	location_changed.emit(current_location)
@@ -75,8 +79,6 @@ func start_new_game() -> void:
 	## 初始装备：魔杖 + 校袍
 	InventoryManager.add_item("item_wand_basic")
 	InventoryManager.add_item("item_school_robe")
-	## TODO: 重置所有系统状态
-	## TODO: 加载初始存档
 	## 关闭主菜单（如果是当前场景）
 	_close_main_menu_if_open()
 	change_scene("res://scenes/world/bedroom.tscn")

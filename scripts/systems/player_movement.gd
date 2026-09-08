@@ -16,7 +16,7 @@ var _near_exit: Area2D = null
 ## 所有出口字典：Area2D -> 目标 loc_id（启动时自动扫描）
 var _exit_targets: Dictionary = {}
 
-## 当前接近的 NPC（按 E 互动）
+## 当前接近的 NPC（按 F 互动）
 var _near_npc: Area2D = null
 
 ## 顶部提示文字引用（自动发现）
@@ -77,7 +77,7 @@ func _scan_npcs() -> void:
 func _interact_npc() -> void:
 	if _near_npc == null:
 		return
-	# 如果正在对话，E 键用于推进
+	# 如果正在对话，F 键用于推进
 	if DialogueManager.is_dialogue_running():
 		DialogueManager.continue_dialogue()
 		return
@@ -87,11 +87,11 @@ func _interact_npc() -> void:
 
 func _change_location() -> void:
 	if _near_exit == null:
-		print("[PlayerMovement] E 键按了但 _near_exit=null (位置:", position, ")")
+		print("[PlayerMovement] F 键按了但 _near_exit=null (位置:", position, ")")
 		return
 	var target_loc: String = _exit_targets.get(_near_exit, "")
 	if target_loc.is_empty():
-		print("[PlayerMovement] E 键按了但 target_loc 为空")
+		print("[PlayerMovement] F 键按了但 target_loc 为空")
 		return
 	print("[PlayerMovement] 切换到: ", target_loc)
 	GameManager.change_location(target_loc)

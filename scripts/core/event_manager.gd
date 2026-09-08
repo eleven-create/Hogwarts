@@ -42,7 +42,28 @@ func _check_trigger(evt: Dictionary) -> bool:
 	if not conditions.is_empty():
 		if not FlagManager.check_conditions(conditions):
 			return false
-		## TODO: stat 条件检查
+		if not _check_stat_conditions(conditions):
+			return false
+	return true
+
+func _check_stat_conditions(conditions: Array) -> bool:
+	for cond: Dictionary in conditions:
+		if cond.has("time_slot"):
+			var slot_name: String = cond.get("time_slot", "").to_lower()
+			var current: String = TimeManager.get_current_time_slot_name().to_lower()
+			if slot_name != current:
+				return false
+		if cond.has("stat"):
+			var stat_id: String = cond.get("stat", "")
+			var op: String = cond.get("op", ">=")
+			var value: float = float(cond.get("value", 0))
+			var current_val: float = StatsManager.get_stat(stat_id)
+			match op:
+				">=": if not (current_val >= value): return false
+				"<=": if not (current_val <= value): return false
+				"==": if not (current_val == value): return false
+				">":  if not (current_val > value): return false
+				"<":  if not (current_val < value): return false
 	return true
 
 ## ---- 事件队列操作 ----
@@ -88,6 +109,11 @@ func complete_event(event_id: String) -> void:
 	_event_history.append(event_id)
 	dequeue_event(event_id)
 	event_completed.emit(event_id)
+
+func clear_all_events() -> void:
+	_active_events.clear()
+	_event_history.clear()
+	print("[EventManager] 已重置所有事件状态")
 
 ## ---- 查询 ----
 

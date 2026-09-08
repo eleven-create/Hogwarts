@@ -19,8 +19,6 @@ signal experience_gained(stat_id: String, amount: int, total: int)
 
 func _ready() -> void:
 	print("[StatsManager] 就绪")
-
-func _init() -> void:
 	_initialize_stats()
 
 ## ---- 初始化 ----

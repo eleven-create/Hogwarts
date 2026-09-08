@@ -106,8 +106,19 @@ func _continue_until_choice_or_end() -> void:
 	var can_continue: bool = _story.call("GetCanContinue")
 	while can_continue:
 		var line: String = _story.call("Continue")
-		# 解析 speaker（来自 tags，格式：# speaker: key 或 # character: 旁白）
-		var speaker: String = _extract_speaker(line)
+		# 解析 Ink 的 # speaker: xxx / # character: xxx tag
+		var speaker: String = ""
+		if line.begins_with("# "):
+			var parts: String = line.substr(2)
+			var colon_idx: int = parts.find(":")
+			if colon_idx > 0:
+				var key: String = parts.substr(0, colon_idx).strip_edges()
+				var val: String = parts.substr(colon_idx + 1).strip_edges()
+				if key in ["speaker", "character"]:
+					speaker = val
+					# 提取后不作为对话文本发出（DialogueUI 单独处理 speaker）
+					can_continue = _story.call("GetCanContinue")
+					continue
 		dialogue_line.emit(speaker, line)
 		can_continue = _story.call("GetCanContinue")
 
@@ -131,15 +142,6 @@ func _continue_until_choice_or_end() -> void:
 	else:
 		# 没有 choice 意味着故事结束
 		end_dialogue()
-
-## 提取 speaker（从 # speaker: xxx 这种标记里，简单文本解析）
-func _extract_speaker(line: String) -> String:
-	# 这里简化处理：speaker 由 DialogueUI 通过 dialogue_started 时显示
-	# 此函数先返回空，前端用 i18n 显示角色名
-	# 真实 speaker 应该通过 Ink tags 传递（这里简化：line 里若以 # 开头视为 speaker）
-	if line.begins_with("# "):
-		return line.substr(2, line.length() - 2)
-	return ""
 
 ## 玩家选择一个选项
 func select_choice(choice_index: int) -> void:

@@ -56,14 +56,16 @@ func get_relationship_level(char_id: String) -> int:
 
 func get_relationship_name(char_id: String) -> String:
 	var level: int = get_relationship_level(char_id)
+	var key: String
 	match level:
-		0: return "stranger"
-		1: return "acquaintance"
-		2: return "friend"
-		3: return "close_friend"
-		4: return "romantic_interest"
-		5: return "beloved"
-	return "unknown"
+		0: key = "stranger"
+		1: key = "acquaintance"
+		2: key = "friend"
+		3: key = "close_friend"
+		4: key = "romantic_interest"
+		5: key = "beloved"
+		_: key = "unknown"
+	return DataLoader.i18n("relation_" + key)
 
 ## ---- 查询 ----
 
