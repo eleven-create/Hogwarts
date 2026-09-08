@@ -1,5 +1,5 @@
 ## npc.gd
-## 职责：可交互 NPC 节点 — 玩家靠近时显示提示，按 E 触发 Ink 对话
+## 职责：可交互 NPC 节点 — 玩家靠近时显示提示，按 F 触发 Ink 对话
 ## 用法：把 NPC 节点放在世界场景里，配 char_id 和 event_id
 ## 依赖：DialogueManager, EventManager, DataLoader
 extends Area2D
@@ -25,6 +25,9 @@ func _ready() -> void:
 	if body_rect and body_rect is ColorRect:
 		body_rect.color = body_color
 	_update_hint()
+	# 连接 Area2D 的检测信号
+	body_entered.connect(_on_body_entered)
+	body_exited.connect(_on_body_exited)
 
 func _update_hint() -> void:
 	if label_hint == null:
@@ -40,13 +43,17 @@ func _update_hint() -> void:
 	label_hint.text = name_str
 
 func _on_body_entered(body: Node) -> void:
-	if body.name == "Player" or body.is_in_group("player"):
+	var is_player: bool = (body.name == "Player" or body.is_in_group("player"))
+	print("[NPC ", name, "] body_entered: ", body.name, " is_player=", is_player)
+	if is_player:
 		_player_in_range = true
 		if label_hint:
 			label_hint.modulate = Color(1, 1, 0.4)  # 高亮
 
 func _on_body_exited(body: Node) -> void:
-	if body.name == "Player" or body.is_in_group("player"):
+	var is_player: bool = (body.name == "Player" or body.is_in_group("player"))
+	print("[NPC ", name, "] body_exited: ", body.name, " is_player=", is_player)
+	if is_player:
 		_player_in_range = false
 		if label_hint:
 			label_hint.modulate = Color.WHITE

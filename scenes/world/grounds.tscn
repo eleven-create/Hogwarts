@@ -26,12 +26,12 @@ offset_bottom = 720.0
 color = Color(0.2, 0.4, 0.35, 1.0)
 
 [node name="LocationLabel" type="Label" parent="."]
-offset_left = 510.0
+offset_left = 20.0
 offset_top = 20.0
-offset_right = 770.0
-offset_bottom = 50.0
+offset_right = 250.0
+offset_bottom = 55.0
 text = "霍格沃茨户外场地"
-horizontal_alignment = 1
+horizontal_alignment = 0
 
 [node name="Walls" type="StaticBody2D" parent="."]
 
@@ -70,11 +70,11 @@ shape = SubResource("RectangleShape2D_player")
 
 ; 出口指示箭头（始终可见）
 [node name="ExitArrow_up" type="Label" parent="."]
-offset_left = 580.0
-offset_top = 20.0
-offset_right = 700.0
-offset_bottom = 60.0
-text = "▲ 返回城堡"
+offset_left = 1100.0
+offset_top = 35.0
+offset_right = 1260.0
+offset_bottom = 75.0
+text = "↑ 返回城堡"
 horizontal_alignment = 1
 modulate = Color(1, 1, 0.5, 1)
 
