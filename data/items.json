@@ -102,6 +102,28 @@
       "effects": [],
       "stackable": false,
       "max_stack": 1
+    },
+    {
+      "item_id": "hermione_bookmark",
+      "name_key": "name_item_hermione_bookmark",
+      "desc_key": "desc_item_hermione_bookmark",
+      "type": "quest",
+      "icon": "res://assets/sprites/items/bookmark.png",
+      "effects": [],
+      "stackable": false,
+      "max_stack": 1
+    },
+    {
+      "item_id": "golden_snitch_photo",
+      "name_key": "name_item_golden_snitch_photo",
+      "desc_key": "desc_item_golden_snitch_photo",
+      "type": "quest",
+      "icon": "res://assets/sprites/items/photo.png",
+      "effects": [
+        {"target": "mood", "op": "add", "value": 5}
+      ],
+      "stackable": false,
+      "max_stack": 1
     }
   ]
 }

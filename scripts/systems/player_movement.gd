@@ -109,7 +109,7 @@ func _on_exit_entered(body: Node, area: Area2D) -> void:
 		# 走 i18n（用 DataLoader.tr 而不是全局 tr，因为全局 tr 需要 POT 文件）
 		if loc.has("name_key"):
 			loc_name = DataLoader.i18n(loc["name_key"])
-		exit_hint.text = "[E] 前往 " + loc_name
+		exit_hint.text = "[F] 前往 " + loc_name
 		exit_hint.visible = true
 
 func _on_exit_exited(body: Node, area: Area2D) -> void:
@@ -129,7 +129,7 @@ func _on_npc_entered(body: Node, area: Area2D) -> void:
 	if exit_hint:
 		var npc_label: Label = area.get_node_or_null("BodyHint")
 		var name_str: String = npc_label.text if npc_label else area.name
-		exit_hint.text = "[E] 与 " + name_str + " 交谈"
+		exit_hint.text = "[F] 与 " + name_str + " 交谈"
 		exit_hint.visible = true
 
 func _on_npc_exited(body: Node, area: Area2D) -> void:
@@ -142,7 +142,7 @@ func _on_npc_exited(body: Node, area: Area2D) -> void:
 			_hide_hint()
 		elif exit_hint:
 			# 恢复出口提示
-			exit_hint.text = "[E] 前往"
+			exit_hint.text = "[F] 前往"
 			exit_hint.visible = true
 
 func _hide_hint() -> void:

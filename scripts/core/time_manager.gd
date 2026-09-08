@@ -54,6 +54,25 @@ func advance_time_slot() -> void:
 		advance_day()
 	current_date.time_slot = slots[idx]
 	time_slot_changed.emit(current_date.time_slot)
+
+## Ink 专用：根据字符串推进到指定时间槽
+func advance_to_slot(slot_name: String) -> void:
+	var slot_map := {
+		"morning": TimeSlot.MORNING,
+		"late_morning": TimeSlot.MORNING,
+		"afternoon": TimeSlot.AFTERNOON,
+		"evening": TimeSlot.EVENING,
+		"night": TimeSlot.NIGHT,
+	}
+	var target: TimeSlot = slot_map.get(slot_name.to_lower(), TimeSlot.MORNING)
+	var current: TimeSlot = current_date.time_slot
+	var slots := TimeSlot.values()
+	var ci: int = slots.find(current)
+	var ti: int = slots.find(target)
+	# 推进直到到达目标槽
+	while ci != ti:
+		advance_time_slot()
+		ci = slots.find(current_date.time_slot)
 	time_changed.emit(current_date)
 
 func advance_day() -> void:

@@ -90,6 +90,8 @@ func _bind_external_functions() -> void:
 	_story.call("BindExternalFunction", "change_affection", _on_change_affection)
 	_story.call("BindExternalFunction", "set_flag", _on_set_flag)
 	_story.call("BindExternalFunction", "get_flag", _on_get_flag)
+	_story.call("BindExternalFunction", "advance_time", _on_advance_time)
+	_story.call("BindExternalFunction", "add_item", _on_add_item)
 
 ## ---- 推进对话 ----
 
@@ -184,6 +186,14 @@ func _on_set_flag(flag_id: String, value: Variant) -> void:
 
 func _on_get_flag(flag_id: String) -> Variant:
 	return FlagManager.get_flag(flag_id)
+
+func _on_advance_time(time_slot: String) -> void:
+	print("[DialogueManager] Ink → advance_time(", time_slot, ")")
+	TimeManager.advance_to_slot(time_slot)
+
+func _on_add_item(item_id: String) -> void:
+	print("[DialogueManager] Ink → add_item(", item_id, ")")
+	InventoryManager.add_item(item_id, 1)
 
 ## ---- 存档兼容 ----
 

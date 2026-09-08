@@ -94,6 +94,10 @@
   "desc_item_sorting_hat": "传说中的分院帽，可以决定新生所属学院。",
   "desc_item_invisibility_cloak": "传说中的隐形衣，穿上后可以隐身。",
   "desc_item_philosophers_stone": "传说中的魔法石，能点石成金、产出不老药。",
+  "name_item_hermione_bookmark": "赫敏的书签",
+  "desc_item_hermione_bookmark": "一块精致的小书签，上面刻着图书馆的徽章。是赫敏赠送的礼物。",
+  "name_item_golden_snitch_photo": "金色飞贼照片",
+  "desc_item_golden_snitch_photo": "一张哈利送给你的照片，画面是他在球场上追逐金色飞贼的英姿。每次看到都会觉得充满干劲。",
 
   "## ===== UI 文本 =====": "",
   "ui_main_menu_title": "霍格沃茨物语",
