@@ -37,9 +37,31 @@ func _physics_process(_delta: float) -> void:
 	else:
 		velocity = Vector2.ZERO
 
+	position = position.clamp(Vector2(105, 45), Vector2(1175, 685))
+	queue_redraw()
+
 	## 出口交互提示
 	if _near_exit != null and Input.is_action_just_pressed("ui_accept"):
 		_change_location()
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_E:
+		if _near_exit != null:
+			get_viewport().set_input_as_handled()
+			_change_location()
+
+## 临时原创像素角色；脚底是碰撞和地图定位锚点。
+func _draw() -> void:
+	draw_rect(Rect2(-14, -4, 28, 6), Color(0.1, 0.1, 0.16, 0.4))
+	var step: float = 2.0 if velocity.length() > 0 and Time.get_ticks_msec() % 400 < 200 else 0.0
+	draw_rect(Rect2(-9, -10 - step, 6, 10), Color("#292737"))
+	draw_rect(Rect2(3, -10 + step, 6, 10), Color("#292737"))
+	draw_rect(Rect2(-12, -29, 24, 21), Color("#384b69"))
+	draw_rect(Rect2(-4, -28, 8, 18), Color("#c2996a"))
+	draw_rect(Rect2(-9, -44, 18, 17), Color("#e1b58f"))
+	draw_rect(Rect2(-10, -47, 20, 7), Color("#493640"))
+	draw_rect(Rect2(-10, -43, 4, 9), Color("#493640"))
+	draw_rect(Rect2(1, -37, 3, 3), Color("#302d3c"))
 
 ## 扫描所有 ExitArea 子节点，连接信号
 func _scan_exits() -> void:
@@ -71,9 +93,7 @@ func _on_exit_entered(body: Node2D, area: Area2D) -> void:
 	_near_exit = area
 	var target_loc: String = _exit_targets.get(area, "")
 	if exit_hint and target_loc != "":
-		var loc: Dictionary = DataLoader.get_location(target_loc)
-		var loc_id: String = loc.get("loc_id", "未知地点")
-		exit_hint.text = "按 E 前往 " + loc_id
+		exit_hint.text = "E / 空格 / 回车 · 前往出口"
 		exit_hint.visible = true
 	print("[PlayerMovement] 进入出口区域 -> ", target_loc)
 

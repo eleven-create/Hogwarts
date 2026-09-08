@@ -1,76 +1,92 @@
-[gd_scene load_steps=6 format=3 uid="uid://bedroom_scene_001"]
-
-[ext_resource type="Script" path="res://scripts/systems/player_movement.gd" id="1_player"]
-[ext_resource type="PackedScene" uid="uid://stats_panel_001" path="res://scenes/ui/ui_stats_panel.tscn" id="2_stats"]
-[ext_resource type="PackedScene" uid="uid://time_indicator_001" path="res://scenes/ui/ui_time_indicator.tscn" id="3_time"]
-[ext_resource type="PackedScene" uid="uid://inventory_panel_001" path="res://scenes/ui/ui_inventory_panel.tscn" id="4_inv"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
-size = Vector2(200, 50)
-
-; 宿舍场景（bedroom.tscn）
-; 玩家用 WASD/方向键移动，到下出口按 E 切到走廊
-[node name="Bedroom" type="Node2D"]
-
-; 背景（直接铺满 viewport 的 ColorRect，但 Node2D 不能用 anchors，改用脚本/手动填满）
-[node name="RoomBackground" type="ColorRect" parent="."]
-offset_right = 1280.0
-offset_bottom = 720.0
-color = Color(0.15, 0.1, 0.2, 1.0)
-
-; 顶部场景名
-[node name="LocationLabel" type="Label" parent="."]
-offset_left = 540.0
-offset_top = 20.0
-offset_right = 740.0
-offset_bottom = 50.0
-text = "格兰芬多宿舍"
-horizontal_alignment = 1
-
-; 玩家角色
-[node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(640, 400)
-script = ExtResource("1_player")
-
-[node name="Body" type="ColorRect" parent="Player"]
-offset_left = -10.0
-offset_top = -20.0
-offset_right = 10.0
-offset_bottom = 0.0
-color = Color(0.2, 0.4, 0.9, 1.0)
-
-; 下出口 → 走廊
-[node name="ExitArea_loc_corridor" type="Area2D" parent="."]
-position = Vector2(640, 670)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea_loc_corridor"]
-shape = SubResource("RectangleShape2D_exit")
-
-[node name="ExitHintArrow" type="Label" parent="ExitArea_loc_corridor"]
-offset_left = -60.0
-offset_top = -10.0
-offset_right = 60.0
-offset_bottom = 10.0
-text = "↓ 走廊"
-horizontal_alignment = 1
-visible = false
-
-; 底部出口提示（按 E 离开）
-[node name="ExitHint" type="Label" parent="."]
-offset_left = 490.0
-offset_top = 640.0
-offset_right = 790.0
-offset_bottom = 680.0
-text = "按 E 离开"
-horizontal_alignment = 1
-visible = false
-
-; UI 层
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 10
-
-[node name="StatsPanel" parent="CanvasLayer" instance=ExtResource("2_stats")]
-
-[node name="TimeIndicator" parent="CanvasLayer" instance=ExtResource("3_time")]
-
-[node name="InventoryPanel" parent="CanvasLayer" instance=ExtResource("4_inv")]
+[gd_scene load_steps=8 format=3 uid="uid://bedroom_scene_001"]
+
+[ext_resource type="Script" path="res://scripts/systems/player_movement.gd" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://stats_panel_001" path="res://scenes/ui/ui_stats_panel.tscn" id="2_stats"]
+[ext_resource type="PackedScene" uid="uid://time_indicator_001" path="res://scenes/ui/ui_time_indicator.tscn" id="3_time"]
+[ext_resource type="PackedScene" uid="uid://inventory_panel_001" path="res://scenes/ui/ui_inventory_panel.tscn" id="4_inv"]
+[ext_resource type="Script" path="res://scripts/systems/world_visuals.gd" id="5_visuals"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
+size = Vector2(200, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
+size = Vector2(18, 12)
+
+; 宿舍场景（bedroom.tscn）
+; 玩家用 WASD/方向键移动，到下出口按 E 切到走廊
+[node name="Bedroom" type="Node2D"]
+
+[node name="WorldVisuals" type="Node2D" parent="."]
+script = ExtResource("5_visuals")
+scene_style = "bedroom"
+obstacles = Array[Rect2]([Rect2(140, 155, 185, 295), Rect2(420, 155, 185, 295), Rect2(700, 155, 185, 295), Rect2(980, 155, 185, 295)])
+
+; 背景（直接铺满 viewport 的 ColorRect，但 Node2D 不能用 anchors，改用脚本/手动填满）
+[node name="RoomBackground" type="ColorRect" parent="."]
+z_index = -10
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.15, 0.1, 0.2, 1.0)
+
+; 顶部场景名
+[node name="LocationLabel" type="Label" parent="."]
+offset_left = 540.0
+offset_top = 20.0
+offset_right = 740.0
+offset_bottom = 50.0
+text = "格兰芬多宿舍"
+horizontal_alignment = 1
+
+; 玩家角色
+[node name="Player" type="CharacterBody2D" parent="."]
+z_index = 2
+position = Vector2(640, 400)
+script = ExtResource("1_player")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_player")
+
+[node name="Body" type="ColorRect" parent="Player"]
+visible = false
+offset_left = -10.0
+offset_top = -20.0
+offset_right = 10.0
+offset_bottom = 0.0
+color = Color(0.2, 0.4, 0.9, 1.0)
+
+; 下出口 → 走廊
+[node name="ExitArea_loc_corridor" type="Area2D" parent="."]
+position = Vector2(640, 670)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea_loc_corridor"]
+shape = SubResource("RectangleShape2D_exit")
+
+[node name="ExitHintArrow" type="Label" parent="ExitArea_loc_corridor"]
+offset_left = -60.0
+offset_top = -10.0
+offset_right = 60.0
+offset_bottom = 10.0
+text = "↓ 走廊"
+horizontal_alignment = 1
+visible = false
+
+; 底部出口提示（按 E 离开）
+[node name="ExitHint" type="Label" parent="."]
+offset_left = 490.0
+offset_top = 640.0
+offset_right = 790.0
+offset_bottom = 680.0
+text = "按 E 离开"
+horizontal_alignment = 1
+visible = false
+
+; UI 层
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="StatsPanel" parent="CanvasLayer" instance=ExtResource("2_stats")]
+
+[node name="TimeIndicator" parent="CanvasLayer" instance=ExtResource("3_time")]
+
+[node name="InventoryPanel" parent="CanvasLayer" instance=ExtResource("4_inv")]

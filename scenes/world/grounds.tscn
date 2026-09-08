@@ -1,71 +1,87 @@
-[gd_scene load_steps=6 format=3 uid="uid://grounds_scene_001"]
-
-[ext_resource type="Script" path="res://scripts/systems/player_movement.gd" id="1_player"]
-[ext_resource type="PackedScene" uid="uid://stats_panel_001" path="res://scenes/ui/ui_stats_panel.tscn" id="2_stats"]
-[ext_resource type="PackedScene" uid="uid://time_indicator_001" path="res://scenes/ui/ui_time_indicator.tscn" id="3_time"]
-[ext_resource type="PackedScene" uid="uid://inventory_panel_001" path="res://scenes/ui/ui_inventory_panel.tscn" id="4_inv"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
-size = Vector2(200, 50)
-
-; 户外场地场景（grounds.tscn）
-; 黑湖畔+草地。北出口→大礼堂
-[node name="Grounds" type="Node2D"]
-
-[node name="RoomBackground" type="ColorRect" parent="."]
-offset_right = 1280.0
-offset_bottom = 720.0
-color = Color(0.2, 0.4, 0.35, 1.0)
-
-[node name="LocationLabel" type="Label" parent="."]
-offset_left = 510.0
-offset_top = 20.0
-offset_right = 770.0
-offset_bottom = 50.0
-text = "霍格沃茨户外场地"
-horizontal_alignment = 1
-
-[node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(640, 400)
-script = ExtResource("1_player")
-
-[node name="Body" type="ColorRect" parent="Player"]
-offset_left = -10.0
-offset_top = -20.0
-offset_right = 10.0
-offset_bottom = 0.0
-color = Color(0.3, 0.9, 0.3, 1.0)
-
-; 北出口 → 大礼堂
-[node name="ExitArea_loc_great_hall" type="Area2D" parent="."]
-position = Vector2(640, 50)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea_loc_great_hall"]
-shape = SubResource("RectangleShape2D_exit")
-
-[node name="ExitHintArrow" type="Label" parent="ExitArea_loc_great_hall"]
-offset_left = -80.0
-offset_top = -10.0
-offset_right = 80.0
-offset_bottom = 10.0
-text = "↑ 返回城堡"
-horizontal_alignment = 1
-visible = false
-
-[node name="ExitHint" type="Label" parent="."]
-offset_left = 490.0
-offset_top = 640.0
-offset_right = 790.0
-offset_bottom = 680.0
-text = "按 E 离开"
-horizontal_alignment = 1
-visible = false
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 10
-
-[node name="StatsPanel" parent="CanvasLayer" instance=ExtResource("2_stats")]
-
-[node name="TimeIndicator" parent="CanvasLayer" instance=ExtResource("3_time")]
-
-[node name="InventoryPanel" parent="CanvasLayer" instance=ExtResource("4_inv")]
+[gd_scene load_steps=8 format=3 uid="uid://grounds_scene_001"]
+
+[ext_resource type="Script" path="res://scripts/systems/player_movement.gd" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://stats_panel_001" path="res://scenes/ui/ui_stats_panel.tscn" id="2_stats"]
+[ext_resource type="PackedScene" uid="uid://time_indicator_001" path="res://scenes/ui/ui_time_indicator.tscn" id="3_time"]
+[ext_resource type="PackedScene" uid="uid://inventory_panel_001" path="res://scenes/ui/ui_inventory_panel.tscn" id="4_inv"]
+[ext_resource type="Script" path="res://scripts/systems/world_visuals.gd" id="5_visuals"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
+size = Vector2(200, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
+size = Vector2(18, 12)
+
+; 户外场地场景（grounds.tscn）
+; 黑湖畔+草地。北出口→大礼堂
+[node name="Grounds" type="Node2D"]
+
+[node name="WorldVisuals" type="Node2D" parent="."]
+script = ExtResource("5_visuals")
+scene_style = "grounds"
+obstacles = Array[Rect2]([Rect2(95, 390, 465, 225), Rect2(720, 390, 465, 225), Rect2(166, 208, 28, 60), Rect2(316, 348, 28, 42), Rect2(906, 238, 28, 60), Rect2(1066, 348, 28, 42)])
+
+[node name="RoomBackground" type="ColorRect" parent="."]
+z_index = -10
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.2, 0.4, 0.35, 1.0)
+
+[node name="LocationLabel" type="Label" parent="."]
+offset_left = 510.0
+offset_top = 20.0
+offset_right = 770.0
+offset_bottom = 50.0
+text = "霍格沃茨户外场地"
+horizontal_alignment = 1
+
+[node name="Player" type="CharacterBody2D" parent="."]
+z_index = 2
+position = Vector2(640, 400)
+script = ExtResource("1_player")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_player")
+
+[node name="Body" type="ColorRect" parent="Player"]
+visible = false
+offset_left = -10.0
+offset_top = -20.0
+offset_right = 10.0
+offset_bottom = 0.0
+color = Color(0.3, 0.9, 0.3, 1.0)
+
+; 北出口 → 大礼堂
+[node name="ExitArea_loc_great_hall" type="Area2D" parent="."]
+position = Vector2(640, 50)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitArea_loc_great_hall"]
+shape = SubResource("RectangleShape2D_exit")
+
+[node name="ExitHintArrow" type="Label" parent="ExitArea_loc_great_hall"]
+offset_left = -80.0
+offset_top = -10.0
+offset_right = 80.0
+offset_bottom = 10.0
+text = "↑ 返回城堡"
+horizontal_alignment = 1
+visible = false
+
+[node name="ExitHint" type="Label" parent="."]
+offset_left = 490.0
+offset_top = 640.0
+offset_right = 790.0
+offset_bottom = 680.0
+text = "按 E 离开"
+horizontal_alignment = 1
+visible = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="StatsPanel" parent="CanvasLayer" instance=ExtResource("2_stats")]
+
+[node name="TimeIndicator" parent="CanvasLayer" instance=ExtResource("3_time")]
+
+[node name="InventoryPanel" parent="CanvasLayer" instance=ExtResource("4_inv")]
