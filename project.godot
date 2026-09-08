@@ -47,6 +47,10 @@ project/assembly_name="Hogwarts Life"
 
 enabled=PackedStringArray("res://addons/godot-mcp/plugin.cfg")
 
+[gui]
+
+theme/custom_font="res://assets/fonts/NotoSansSC.ttf"
+
 [input]
 
 ui_accept={

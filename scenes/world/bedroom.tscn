@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bedroom_scene_001"]
+[gd_scene load_steps=9 format=3 uid="uid://bedroom_scene_001"]
 
 [ext_resource type="Script" path="res://scripts/systems/player_movement.gd" id="1_player"]
 [ext_resource type="PackedScene" uid="uid://stats_panel_001" path="res://scenes/ui/ui_stats_panel.tscn" id="2_stats"]
 [ext_resource type="PackedScene" uid="uid://time_indicator_001" path="res://scenes/ui/ui_time_indicator.tscn" id="3_time"]
 [ext_resource type="PackedScene" uid="uid://inventory_panel_001" path="res://scenes/ui/ui_inventory_panel.tscn" id="4_inv"]
 [ext_resource type="Script" path="res://scripts/systems/world_visuals.gd" id="5_visuals"]
+[ext_resource type="Texture2D" path="res://assets/environments/tower_dormitory.png" id="6_room"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
 size = Vector2(200, 50)
@@ -17,9 +18,10 @@ size = Vector2(18, 12)
 [node name="Bedroom" type="Node2D"]
 
 [node name="WorldVisuals" type="Node2D" parent="."]
+visible = false
 script = ExtResource("5_visuals")
 scene_style = "bedroom"
-obstacles = Array[Rect2]([Rect2(140, 155, 185, 295), Rect2(420, 155, 185, 295), Rect2(700, 155, 185, 295), Rect2(980, 155, 185, 295)])
+obstacles = Array[Rect2]([Rect2(142, 294, 166, 250), Rect2(326, 294, 158, 250), Rect2(796, 294, 164, 250), Rect2(974, 294, 158, 250), Rect2(536, 116, 196, 210), Rect2(158, 548, 182, 104), Rect2(962, 518, 148, 146)])
 
 ; 背景（直接铺满 viewport 的 ColorRect，但 Node2D 不能用 anchors，改用脚本/手动填满）
 [node name="RoomBackground" type="ColorRect" parent="."]
@@ -28,19 +30,30 @@ offset_right = 1280.0
 offset_bottom = 720.0
 color = Color(0.15, 0.1, 0.2, 1.0)
 
+[node name="DormitoryArt" type="Sprite2D" parent="."]
+texture_filter = 1
+z_index = -5
+position = Vector2(640, 360)
+scale = Vector2(2, 2)
+texture = ExtResource("6_room")
+
 ; 顶部场景名
 [node name="LocationLabel" type="Label" parent="."]
-offset_left = 540.0
+offset_left = 82.0
 offset_top = 20.0
-offset_right = 740.0
-offset_bottom = 50.0
+offset_right = 330.0
+offset_bottom = 62.0
+theme_override_colors/font_color = Color(0.941, 0.827, 0.608, 1)
+theme_override_colors/font_shadow_color = Color(0.059, 0.047, 0.071, 0.9)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 22
 text = "格兰芬多宿舍"
-horizontal_alignment = 1
 
 ; 玩家角色
 [node name="Player" type="CharacterBody2D" parent="."]
 z_index = 2
-position = Vector2(640, 400)
+position = Vector2(640, 450)
 script = ExtResource("1_player")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
@@ -86,7 +99,22 @@ visible = false
 layer = 10
 
 [node name="StatsPanel" parent="CanvasLayer" instance=ExtResource("2_stats")]
+visible = false
 
 [node name="TimeIndicator" parent="CanvasLayer" instance=ExtResource("3_time")]
 
 [node name="InventoryPanel" parent="CanvasLayer" instance=ExtResource("4_inv")]
+visible = false
+
+[node name="ControlHint" type="Label" parent="CanvasLayer"]
+offset_left = 435.0
+offset_top = 686.0
+offset_right = 845.0
+offset_bottom = 712.0
+theme_override_colors/font_color = Color(0.85, 0.77, 0.62, 0.9)
+theme_override_colors/font_shadow_color = Color(0.04, 0.03, 0.05, 0.85)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 13
+text = "WASD / 方向键移动  ·  E 交互  ·  C 属性  ·  B 背包"
+horizontal_alignment = 1

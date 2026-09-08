@@ -26,6 +26,10 @@ func _ready() -> void:
 	StatsManager.stat_changed.connect(_on_stat_changed)
 	_refresh_all()
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_C:
+		visible = not visible
+
 ## 刷新所有属性显示
 func _refresh_all() -> void:
 	for stat_id: String in MAIN_STAT_IDS:
