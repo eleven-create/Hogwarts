@@ -38,8 +38,18 @@ func set_affection(char_id: String, value: int) -> void:
 		return
 	_affections[char_id] = clamped
 	affection_changed.emit(char_id, old, clamped)
+	# 跨等级事件（占位：等级上升时触发）
+	if get_relationship_level(char_id) > get_relationship_level_at(old):
+		_relationship_established.emit(char_id, get_relationship_level(char_id))
 	if clamped >= MAX_AFFECTION:
 		affection_maxed.emit(char_id)
+
+## 根据好感度值计算等级（不查 _affections）
+func get_relationship_level_at(affection: int) -> int:
+	for i: int in range(RELATION_LEVELS.size() - 1, -1, -1):
+		if affection >= RELATION_LEVELS[i]:
+			return i
+	return 0
 
 func change_affection(char_id: String, amount: int) -> void:
 	var current: int = get_affection(char_id)

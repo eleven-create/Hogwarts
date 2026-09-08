@@ -54,7 +54,7 @@ func _on_dialogue_started(_knot: String, _event_id: String) -> void:
 	speaker_label.text = ""
 	text_label.text = "[i]...[/i]"
 
-func _on_dialogue_line(speaker: String, text: String) -> void:
+func _on_dialogue_line(_speaker: String, text: String) -> void:
 	# 跳过 Ink 的 # speaker / # character 标记行
 	if text.begins_with("# "):
 		var parts: String = text.substr(2)

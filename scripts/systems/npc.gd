@@ -18,19 +18,19 @@ extends Area2D
 ## 玩家是否在交互范围内
 var _player_in_range: bool = false
 
-@onready var label_hint: Label = get_node_or_null("BodyHint")
-@onready var body_rect: ColorRect = get_node_or_null("Body")
+@onready var _label_hint: Label = get_node_or_null("BodyHint")
+@onready var _body_rect: ColorRect = get_node_or_null("Body")
 
 func _ready() -> void:
-	if body_rect and body_rect is ColorRect:
-		body_rect.color = body_color
+	if _body_rect and _body_rect is ColorRect:
+		_body_rect.color = body_color
 	_update_hint()
 	# 连接 Area2D 的检测信号
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 
 func _update_hint() -> void:
-	if label_hint == null:
+	if _label_hint == null:
 		return
 	var name_str: String = display_name_override
 	if name_str.is_empty() and char_id != "" and DataLoader:
@@ -40,23 +40,23 @@ func _update_hint() -> void:
 			name_str = DataLoader.i18n(name_key)
 	if name_str == "":
 		name_str = "???"
-	label_hint.text = name_str
+	_label_hint.text = name_str
 
 func _on_body_entered(body: Node) -> void:
 	var is_player: bool = (body.name == "Player" or body.is_in_group("player"))
 	print("[NPC ", name, "] body_entered: ", body.name, " is_player=", is_player)
 	if is_player:
 		_player_in_range = true
-		if label_hint:
-			label_hint.modulate = Color(1, 1, 0.4)  # 高亮
+		if _label_hint:
+			_label_hint.modulate = Color(1, 1, 0.4)  # 高亮
 
 func _on_body_exited(body: Node) -> void:
 	var is_player: bool = (body.name == "Player" or body.is_in_group("player"))
 	print("[NPC ", name, "] body_exited: ", body.name, " is_player=", is_player)
 	if is_player:
 		_player_in_range = false
-		if label_hint:
-			label_hint.modulate = Color.WHITE
+		if _label_hint:
+			_label_hint.modulate = Color.WHITE
 
 ## 由 player_movement 调用：检查是否要交互
 func try_interact() -> bool:

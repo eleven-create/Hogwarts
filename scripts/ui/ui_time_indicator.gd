@@ -3,8 +3,8 @@
 ## 依赖：TimeManager
 extends PanelContainer
 
-@onready var date_label: Label = $MarginContainer/VBoxContainer/DateLabel
-@onready var time_label: Label = $MarginContainer/VBoxContainer/TimeLabel
+@onready var date_label: Label = $MarginContainer/HBoxContainer/DateLabel
+@onready var time_label: Label = $MarginContainer/HBoxContainer/TimeLabel
 
 func _ready() -> void:
 	# 连接 TimeManager 信号

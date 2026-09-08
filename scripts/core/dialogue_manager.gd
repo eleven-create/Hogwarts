@@ -34,12 +34,8 @@ func start_story_from_file(ink_knot: String, event_id: String = "") -> void:
 	if _is_running:
 		push_warning("[DialogueManager] 对话已在运行中，忽略 start_story_from_file")
 		return
-	# 通过 C# 工厂类创建 InkStory
-	# InkBridge 是 HarryPotter 命名空间下的 C# 类
-	var story = ClassDB.instantiate("InkStory")
-	if story == null:
-		# 退而求其次：尝试通过 C# 静态类
-		story = _create_story_via_csharp(path)
+	# 通过 C# 静态类创建 InkStory（推荐）
+	var story = _create_story_via_csharp(path)
 	if story == null:
 		push_error("[DialogueManager] 无法创建 InkStory")
 		return
@@ -48,15 +44,18 @@ func start_story_from_file(ink_knot: String, event_id: String = "") -> void:
 ## 通过 C# 类直接调用（更可靠）
 func _create_story_via_csharp(file_path: String) -> Object:
 	# ClassDB 没有 InkBridge（不是 GlobalClass），用 load() 加载 C# script 类
-	# GDScript 调用 C# 静态方法：ClassName.method(args)
-	var InkBridge = load("res://addons/GodotInk/Src/InkBridge.cs")
-	if InkBridge == null:
+	# InkBridge.cs 里的方法是 static，用 call() 调用
+	# 注意：GDScript 的 has_method() 不会检测 C# static 方法，直接尝试调用
+	var _ink_bridge_script = load("res://addons/GodotInk/Src/InkBridge.cs")
+	if _ink_bridge_script == null:
 		push_error("[DialogueManager] 无法加载 InkBridge.cs")
 		return null
-	if not InkBridge.has_method("CreateStoryFromFile"):
-		push_error("[DialogueManager] InkBridge 缺少 CreateStoryFromFile 方法")
+	# 直接调用（跳过 has_method 检测，因为 C# static 方法不会被 GDScript 检测到）
+	var result = _ink_bridge_script.call("CreateStoryFromFile", file_path)
+	if result == null:
+		push_error("[DialogueManager] InkBridge.CreateStoryFromFile 返回 null，可能是 .ink 文件不存在或编译失败")
 		return null
-	return InkBridge.call("CreateStoryFromFile", file_path)
+	return result
 
 func _start_with_story(story: Object, ink_knot: String, event_id: String) -> void:
 	_story = story

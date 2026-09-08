@@ -62,16 +62,28 @@ func _scan_exits() -> void:
 			child.body_exited.connect(_on_exit_exited.bind(child))
 			print("[PlayerMovement] 注册出口: ", child.name, " -> ", target_loc)
 
-## 扫描所有 NPC 子节点（同时是 Area2D 且有 npc.gd 脚本）
+## 扫描所有 NPC 子节点（同时是 Area2D 且有 try_interact 方法）
 func _scan_npcs() -> void:
 	var parent: Node = get_parent()
 	if parent == null:
 		return
 	for child in parent.get_children():
 		if child is Area2D and child.has_method("try_interact"):
-			child.body_entered.connect(_on_npc_entered.bind(child))
-			child.body_exited.connect(_on_npc_exited.bind(child))
+			# 检查是否已连接（避免重复连接）
+			if not _is_npc_signal_connected(child, "body_entered"):
+				child.body_entered.connect(_on_npc_entered.bind(child))
+			if not _is_npc_signal_connected(child, "body_exited"):
+				child.body_exited.connect(_on_npc_exited.bind(child))
 			print("[PlayerMovement] 注册 NPC: ", child.name)
+
+## 检查某信号的给定 callable 是否已连接
+func _is_npc_signal_connected(node: Node, signal_name: String) -> bool:
+	var connections: Array = node.get_signal_connection_list(signal_name)
+	for conn: Dictionary in connections:
+		var callable: Callable = conn.get("callable")
+		if callable.get_object() == self:
+			return true
+	return false
 
 ## 触发 NPC 交互
 func _interact_npc() -> void:
@@ -128,7 +140,7 @@ func _on_npc_entered(body: Node, area: Area2D) -> void:
 		return
 	if exit_hint:
 		var npc_label: Label = area.get_node_or_null("BodyHint")
-		var name_str: String = npc_label.text if npc_label else area.name
+		var name_str: String = npc_label.text if npc_label else str(area.name)
 		exit_hint.text = "[F] 与 " + name_str + " 交谈"
 		exit_hint.visible = true
 

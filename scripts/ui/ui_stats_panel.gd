@@ -3,25 +3,26 @@
 ## 依赖：StatsManager
 extends PanelContainer
 
-## 属性 ID -> ProgressBar 映射
+## 属性 ID -> ProgressBar 映射（_ready 里手动构造）
 const MAIN_STAT_IDS: Array[String] = [
 	"intelligence", "charm", "courage",
 	"cunning", "magic_power", "constitution"
 ]
 
-@onready var progress_bars: Dictionary = {
-	"intelligence":  $MarginContainer/VBoxContainer/GridContainer/ProgressBarINT,
-	"charm":        $MarginContainer/VBoxContainer/GridContainer/ProgressBarCHA,
-	"courage":      $MarginContainer/VBoxContainer/GridContainer/ProgressBarCOU,
-	"cunning":      $MarginContainer/VBoxContainer/GridContainer/ProgressBarCUN,
-	"magic_power":  $MarginContainer/VBoxContainer/GridContainer/ProgressBarMAG,
-	"constitution": $MarginContainer/VBoxContainer/GridContainer/ProgressBarCON,
-}
-
+var progress_bars: Dictionary = {}
 @onready var energy_label: Label = $MarginContainer/VBoxContainer/HBoxEnergy/ValueEnergy
 @onready var mood_label: Label = $MarginContainer/VBoxContainer/HBoxMood/ValueMood
 
 func _ready() -> void:
+	# 字典必须在 _ready 里手动构造（@onready 不能用在 dict 字面量上）
+	progress_bars = {
+		"intelligence":  $MarginContainer/VBoxContainer/GridContainer/ProgressBarINT,
+		"charm":        $MarginContainer/VBoxContainer/GridContainer/ProgressBarCHA,
+		"courage":      $MarginContainer/VBoxContainer/GridContainer/ProgressBarCOU,
+		"cunning":      $MarginContainer/VBoxContainer/GridContainer/ProgressBarCUN,
+		"magic_power":  $MarginContainer/VBoxContainer/GridContainer/ProgressBarMAG,
+		"constitution": $MarginContainer/VBoxContainer/GridContainer/ProgressBarCON,
+	}
 	# 连接信号：属性变化时刷新对应进度条
 	StatsManager.stat_changed.connect(_on_stat_changed)
 	_refresh_all()

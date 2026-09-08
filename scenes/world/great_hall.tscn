@@ -28,15 +28,6 @@ size = Vector2(1280, 20)
 offset_right = 1280.0
 offset_bottom = 720.0
 color = Color(0.25, 0.18, 0.1, 1.0)
-
-[node name="LocationLabel" type="Label" parent="."]
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 200.0
-offset_bottom = 55.0
-text = "大礼堂"
-horizontal_alignment = 0
-
 ; === 4 面墙 ===
 [node name="Walls" type="StaticBody2D" parent="."]
 
@@ -80,8 +71,8 @@ shape = SubResource("RectangleShape2D_player")
 position = Vector2(400, 320)
 script = ExtResource("6_npc")
 char_id = "char_hermione"
-event_id = "evt_great_hall_meal"
-ink_knot = "event_great_hall_meal"
+event_id = ""
+ink_knot = "meet_hermione"
 body_color = Color(0.2, 0.6, 0.9, 1.0)
 
 [node name="Body" type="ColorRect" parent="NPC_hermione"]
@@ -106,8 +97,8 @@ shape = SubResource("RectangleShape2D_npc")
 position = Vector2(640, 320)
 script = ExtResource("6_npc")
 char_id = "char_draco"
-event_id = "evt_great_hall_meal"
-ink_knot = "event_great_hall_meal"
+event_id = ""
+ink_knot = "meet_draco"
 body_color = Color(0.4, 0.7, 0.3, 1.0)
 
 [node name="Body" type="ColorRect" parent="NPC_draco"]
@@ -132,8 +123,8 @@ shape = SubResource("RectangleShape2D_npc")
 position = Vector2(880, 320)
 script = ExtResource("6_npc")
 char_id = "char_harry"
-event_id = "evt_great_hall_meal"
-ink_knot = "event_great_hall_meal"
+event_id = ""
+ink_knot = "meet_harry"
 body_color = Color(0.9, 0.4, 0.3, 1.0)
 
 [node name="Body" type="ColorRect" parent="NPC_harry"]
@@ -220,6 +211,15 @@ visible = false
 ; === UI 层 ===
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 10
+
+[node name="LocationLabel" type="Label" parent="CanvasLayer"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 240.0
+offset_bottom = 56.0
+text = "大礼堂"
+horizontal_alignment = 0
+modulate = Color(1, 0.95, 0.7, 1)
 
 [node name="StatsPanel" parent="CanvasLayer" instance=ExtResource("2_stats")]
 
