@@ -293,6 +293,71 @@ for y in range(360):
         factor=1-max(0,dist-.35)*.17
         n=R.choice([-2,-1,0,0,0,1,2])
         pix[x,y]=tuple(max(0,min(255,int(v*factor)+n)) for v in (r,g,b))
+# Upscale once with hard edges, then paint a second detail pass at 1280x720.
+# This creates one-pixel stitching and material marks that the earlier 640px pass
+# could not represent, while preserving the deliberately pixel-built silhouettes.
+im = im.resize((1280, 720), Image.Resampling.NEAREST)
+d = ImageDraw.Draw(im)
+R = random.Random(113)
+
+# Fine stone pitting and hairline cracks on the tower wall.
+for _ in range(245):
+    x = R.randrange(95, 1185); y = R.randrange(105, 303)
+    if 535 < x < 745 and 105 < y < 302:
+        continue
+    shade = R.choice(["#302f38", "#777078", "#45434d"])
+    length = R.randrange(2, 10)
+    d.line((x, y, x + length, y + R.choice([-1, 0, 0, 1])), fill=shade)
+    if R.random() < .16:
+        d.line((x + length, y, x + length + R.randrange(2, 5), y + R.randrange(2, 7)), fill=shade)
+
+# Wood grain knots, nail heads and scratches.
+for _ in range(210):
+    x = R.randrange(100, 1175); y = R.randrange(310, 652)
+    if 485 < x < 795 and 360 < y < 625:
+        continue
+    c = R.choice(["#322724", "#9b7049", "#50372d"])
+    d.line((x, y, min(1175, x + R.randrange(3, 20)), y + R.choice([-1, 0, 1])), fill=c)
+for x in range(116, 1170, 98):
+    for y in range(318, 625, 20):
+        d.rectangle((x, y, x + 2, y + 2), fill="#2a2424")
+        d.point((x, y), fill="#aa8256")
+
+# Curtain weave, embroidered dots and blanket fringe.
+for bx in [152, 328, 802, 978]:
+    for y in range(330, 495, 6):
+        d.line((bx + 10, y, bx + 145, y), fill="#7c2d3d")
+    for x in range(bx + 17, bx + 143, 12):
+        d.point((x, 415), fill="#f0c477")
+        d.point((x + 2, 417), fill="#ad754b")
+    for x in range(bx + 31, bx + 130, 8):
+        d.line((x, 505, x - 2, 514), fill="#bd8252")
+
+# Rug cross-stitch and slight wear; drawn sparingly so the crest stays readable.
+for y in range(404, 594, 7):
+    for x in range(534 + ((y // 7) % 2) * 4, 758, 8):
+        if ((x + y) // 7) % 5:
+            d.point((x, y), fill="#8d4545")
+        else:
+            d.point((x, y), fill="#d1a467")
+for _ in range(55):
+    x = R.randrange(530, 765); y = R.randrange(402, 598)
+    d.line((x, y, x + R.randrange(2, 8), y), fill="#5e3039")
+
+# Readable-looking ink marks on parchment, brass glints and colored bottle shine.
+for y, width in [(574, 29), (579, 34), (584, 21), (589, 30)]:
+    d.line((465, y, 465 + width, y), fill="#8c7157")
+for x, y in [(310,270),(406,528),(810,526),(1000,520),(1080,520),(579,193),(702,193)]:
+    d.rectangle((x, y, x + 2, y + 2), fill="#f7d990")
+for x, y in [(982,516),(1014,516),(1062,516)]:
+    d.line((x + 2, y, x + 2, y + 10), fill="#d7eee1")
+
+# Dust specks caught by moon and fire light.
+for _ in range(70):
+    x = R.randrange(170, 1110); y = R.randrange(190, 575)
+    if R.random() < .6 and not (500 < x < 790 and 360 < y < 610):
+        d.point((x, y), fill=R.choice(["#b9ac91", "#777b82", "#c6a777"]))
+
 OUT.mkdir(parents=True,exist_ok=True)
-im.save(OUT/"tower_dormitory.png")
+im.save(OUT/"tower_dormitory.png", optimize=True)
 print(OUT/"tower_dormitory.png")

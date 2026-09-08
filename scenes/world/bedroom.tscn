@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bedroom_scene_001"]
+[gd_scene load_steps=11 format=3 uid="uid://bedroom_scene_001"]
 
 [ext_resource type="Script" path="res://scripts/systems/player_movement.gd" id="1_player"]
 [ext_resource type="PackedScene" uid="uid://stats_panel_001" path="res://scenes/ui/ui_stats_panel.tscn" id="2_stats"]
@@ -6,6 +6,17 @@
 [ext_resource type="PackedScene" uid="uid://inventory_panel_001" path="res://scenes/ui/ui_inventory_panel.tscn" id="4_inv"]
 [ext_resource type="Script" path="res://scripts/systems/world_visuals.gd" id="5_visuals"]
 [ext_resource type="Texture2D" path="res://assets/environments/tower_dormitory.png" id="6_room"]
+[ext_resource type="Script" path="res://scripts/systems/dormitory_ambience.gd" id="7_ambience"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_calendar"]
+bg_color = Color(0.15, 0.13, 0.14, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.57, 0.43, 0.26, 1)
+shadow_color = Color(0.03, 0.02, 0.04, 0.45)
+shadow_size = 5
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exit"]
 size = Vector2(200, 50)
@@ -34,8 +45,10 @@ color = Color(0.15, 0.1, 0.2, 1.0)
 texture_filter = 1
 z_index = -5
 position = Vector2(640, 360)
-scale = Vector2(2, 2)
 texture = ExtResource("6_room")
+
+[node name="Ambience" type="Node2D" parent="."]
+script = ExtResource("7_ambience")
 
 ; 顶部场景名
 [node name="LocationLabel" type="Label" parent="."]
@@ -102,6 +115,7 @@ layer = 10
 visible = false
 
 [node name="TimeIndicator" parent="CanvasLayer" instance=ExtResource("3_time")]
+theme_override_styles/panel = SubResource("StyleBox_calendar")
 
 [node name="InventoryPanel" parent="CanvasLayer" instance=ExtResource("4_inv")]
 visible = false
