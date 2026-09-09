@@ -13,6 +13,7 @@ var _input_dir: Vector2 = Vector2.ZERO
 
 ## 当前接近的出口
 var _near_exit: Area2D = null
+var _near_object: Node2D = null
 
 ## 所有出口字典：Area2D -> 目标 loc_id（启动时自动扫描）
 var _exit_targets: Dictionary = {}
@@ -43,12 +44,17 @@ func _physics_process(_delta: float) -> void:
 	## 出口交互提示
 	if _near_exit != null and Input.is_action_just_pressed("ui_accept"):
 		_change_location()
+	elif _near_object != null and Input.is_action_just_pressed("ui_accept"):
+		_interact_object()
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_E:
 		if _near_exit != null:
 			get_viewport().set_input_as_handled()
 			_change_location()
+		elif _near_object != null:
+			get_viewport().set_input_as_handled()
+			_interact_object()
 
 ## 临时原创像素角色；脚底是碰撞和地图定位锚点。
 func _draw() -> void:
@@ -75,6 +81,12 @@ func _scan_exits() -> void:
 			child.body_entered.connect(_on_exit_entered.bind(child))
 			child.body_exited.connect(_on_exit_exited.bind(child))
 			print("[PlayerMovement] 注册出口: ", child.name, " -> ", target_loc)
+	for child in parent.get_children():
+		if child.is_in_group("interactable_objects"):
+			var area: Area2D = child.get_node_or_null("InteractArea")
+			if area:
+				area.body_entered.connect(_on_object_entered.bind(child))
+				area.body_exited.connect(_on_object_exited.bind(child))
 
 func _change_location() -> void:
 	if _near_exit == null:
@@ -103,6 +115,28 @@ func _on_exit_exited(body: Node2D, area: Area2D) -> void:
 	if _near_exit == area:
 		_near_exit = null
 		_hide_hint()
+
+func _on_object_entered(body: Node2D, object: Node2D) -> void:
+	if body != self:
+		return
+	_near_object = object
+	if exit_hint and _near_exit == null:
+		exit_hint.text = "E / 空格 / 回车 · " + object.interact()
+		exit_hint.visible = true
+
+func _on_object_exited(body: Node2D, object: Node2D) -> void:
+	if body == self and _near_object == object:
+		_near_object = null
+		if _near_exit == null:
+			_hide_hint()
+
+func _interact_object() -> void:
+	if _near_object == null:
+		return
+	print("[PlayerMovement] 互动: ", _near_object.name, " -> ", _near_object.interact())
+	if exit_hint:
+		exit_hint.text = _near_object.interact()
+		exit_hint.visible = true
 
 func _hide_hint() -> void:
 	if exit_hint:

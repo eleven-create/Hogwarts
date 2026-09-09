@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/systems/world_visuals.gd" id="5_visuals"]
 [ext_resource type="Texture2D" path="res://assets/environments/tower_dormitory.png" id="6_room"]
 [ext_resource type="Script" path="res://scripts/systems/dormitory_ambience.gd" id="7_ambience"]
+[ext_resource type="Script" path="res://scripts/systems/interactable_object.gd" id="8_interactable"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_calendar"]
 bg_color = Color(0.15, 0.13, 0.14, 0.95)
@@ -49,6 +50,36 @@ texture = ExtResource("6_room")
 
 [node name="Ambience" type="Node2D" parent="."]
 script = ExtResource("7_ambience")
+
+[node name="BedLeft" type="StaticBody2D" parent="."]
+position = Vector2(225, 420)
+script = ExtResource("8_interactable")
+object_kind = "bed"
+display_size = Vector2(150, 210)
+
+[node name="BedRight" type="StaticBody2D" parent="."]
+position = Vector2(1050, 420)
+script = ExtResource("8_interactable")
+object_kind = "bed"
+display_size = Vector2(150, 210)
+
+[node name="StudyDesk" type="StaticBody2D" parent="."]
+position = Vector2(250, 580)
+script = ExtResource("8_interactable")
+object_kind = "desk"
+display_size = Vector2(170, 70)
+
+[node name="TravelChest" type="StaticBody2D" parent="."]
+position = Vector2(900, 575)
+script = ExtResource("8_interactable")
+object_kind = "chest"
+display_size = Vector2(120, 60)
+
+[node name="MoonWindow" type="StaticBody2D" parent="."]
+position = Vector2(300, 190)
+script = ExtResource("8_interactable")
+object_kind = "window"
+display_size = Vector2(110, 120)
 
 ; 顶部场景名
 [node name="LocationLabel" type="Label" parent="."]
