@@ -55,28 +55,36 @@ func _draw_bedroom() -> void:
 		_window(Vector2(x, 85))
 
 func _draw_corridor() -> void:
-	_panel(Rect2(55, 75, 1170, 570), Color("#2c3048"), Color("#9ba3c4"))
-	_panel(Rect2(100, 125, 1080, 470), Color("#4c526e"), Color("#d4b47e"))
-	for x in range(120, 1160, 80): draw_line(Vector2(x, 145), Vector2(x, 575), Color("#626985"), 2.0)
-	for y in range(155, 580, 70): draw_line(Vector2(120, y), Vector2(1160, y), Color("#626985"), 2.0)
-	for x in [180.0, 345.0, 815.0, 980.0]: _panel(Rect2(x, 155, 120, 130), Color("#9bc4d4"), Color("#e8d5a5"))
-	_panel(Rect2(475, 130, 330, 460), Color("#7e3d52"), Color("#d89c68"))
-	for y: int in range(160, 580, 60):
-		_panel(Rect2(495, y, 4, 28), Color("#cf9d75"))
-		_panel(Rect2(780, y, 4, 28), Color("#cf9d75"))
-	for x: int in [180, 345, 815, 980]:
-		_panel(Rect2(x + 57, 155, 6, 130), Color("#e8d5a5"))
-		_panel(Rect2(x, 215, 120, 6), Color("#e8d5a5"))
-	for x: int in [125, 1125]:
+	_panel(Rect2(55, 75, 1170, 570), Color("#191d31"), Color("#caa66a"))
+	_panel(Rect2(92, 112, 1096, 486), Color("#42465f"), Color("#e1c58b"))
+	_floor(Color("#555b76"), false)
+	_panel(Rect2(468, 128, 344, 466), Color("#6e3048"), Color("#d6a25f"))
+	_panel(Rect2(492, 150, 296, 420), Color("#7b3c55"), Color("#9e6a63"))
+	for y: int in range(165, 560, 54):
+		draw_line(Vector2(510, y), Vector2(770, y), Color("#995f70"), 2.0)
+	for x in [180.0, 345.0, 815.0, 980.0]:
+		_arch(Vector2(x, 150), Vector2(120, 145), Color("#6d7189"), Color("#d8bd83"))
+		_window(Vector2(x + 16, 177))
+	for x: int in [118, 1128]:
 		for y: int in [340, 470]:
-			_panel(Rect2(x, y, 30, 70), Color("#9693a3"), Color("#d4b47e"))
-			_candle(Vector2(x + 15, y - 10))
+			_panel(Rect2(x, y, 34, 74), Color("#29283d"), Color("#d4b47e"))
+			_candle(Vector2(x + 17, y - 10))
+	for x: int in [142, 1118]:
+		_panel(Rect2(x, 132, 38, 430), Color("#292b40"), Color("#9c805b"))
+		for y: int in range(150, 550, 72):
+			_panel(Rect2(x - 8, y, 54, 8), Color("#c6a875"))
+	_banner(Vector2(120, 275), Color("#8b304b"), "G")
+	_banner(Vector2(1120, 275), Color("#264c75"), "R")
 
 func _draw_great_hall() -> void:
-	_panel(Rect2(55, 75, 1170, 570), Color("#3a211c"), Color("#d9b16b"))
+	_panel(Rect2(55, 75, 1170, 570), Color("#24191d"), Color("#d9b16b"))
 	_panel(Rect2(95, 105, 1090, 510), Color("#70452b"), Color("#e5c17b"))
-	_floor(Color("#885b39"), false)
-	for x in [175.0, 390.0, 605.0, 820.0, 1035.0]: _panel(Rect2(x, 125, 90, 120), Color("#8ec4d0"), Color("#f3d494"))
+	_floor(Color("#885b39"), true)
+	for x in [175.0, 390.0, 605.0, 820.0, 1035.0]:
+		_arch(Vector2(x, 125), Vector2(90, 125), Color("#4a3140"), Color("#edcf8c"))
+		_panel(Rect2(x + 12, 145, 66, 82), Color("#284258"), Color("#93b5bf"))
+		for pane in [0, 1, 2]:
+			draw_line(Vector2(x + 18 + pane * 22, 151), Vector2(x + 18 + pane * 22, 220), Color("#6d8d98"), 2.0)
 	for y in [285.0, 430.0]:
 		_panel(Rect2(180, y, 320, 70), Color("#4c2b28"), Color("#d6a15e"))
 		_panel(Rect2(780, y, 320, 70), Color("#4c2b28"), Color("#d6a15e"))
@@ -87,10 +95,23 @@ func _draw_great_hall() -> void:
 				_panel(Rect2(x + 24 + place * 76, y + 28, 20, 16), Color("#dfd3b0"))
 				_candle(Vector2(x + 60 + place * 76, y + 32))
 	_panel(Rect2(540, 260, 200, 300), Color("#9b6a43"), Color("#e0b873"))
+	_panel(Rect2(565, 285, 150, 245), Color("#c19258"), Color("#f0d28d"))
+	for y in range(315, 510, 42):
+		_panel(Rect2(590, y, 100, 7), Color("#8b5b3d"))
+	for x in [200.0, 1060.0]:
+		_banner(Vector2(x, 180), Color("#8d304b" if x < 500 else "#315d86"), "H")
+		_statue(Vector2(x, 535))
 
 func _draw_grounds() -> void:
 	_panel(Rect2(55, 75, 1170, 570), Color("#173b3d"), Color("#a6cf8a"))
 	_panel(Rect2(95, 105, 1090, 510), Color("#5f9b60"), Color("#b5d889"))
+	_panel(Rect2(95, 105, 1090, 78), Color("#718a66"), Color("#c4d79f"))
+	for x in range(120, 1160, 110):
+		_panel(Rect2(x, 120, 72, 36), Color("#788d78"), Color("#b4c59b"))
+		_panel(Rect2(x + 7, 128, 58, 20), Color("#314451"))
+	for p in [Vector2(150, 215), Vector2(310, 215), Vector2(930, 215), Vector2(1090, 215)]:
+		_arch(p, Vector2(88, 82), Color("#65735d"), Color("#cfbf88"))
+		_panel(Rect2(p + Vector2(17, 22), Vector2(54, 42)), Color("#334956"), Color("#a7b9a0"))
 	for i: int in range(160):
 		var point := Vector2(110 + (i * 97) % 1050, 125 + (i * 61) % 255)
 		_panel(Rect2(point, Vector2(4, 8)), Color("#7eb36d"))
@@ -106,6 +127,13 @@ func _draw_grounds() -> void:
 		_panel(Rect2(p + Vector2(-32, -38), Vector2(64, 80)), Color("#275543"))
 		_panel(Rect2(p + Vector2(-44, -20), Vector2(88, 44)), Color("#32754b"))
 		_panel(Rect2(p + Vector2(-24, -32), Vector2(44, 44)), Color("#4b9357"))
+	_panel(Rect2(840, 300, 260, 72), Color("#6d5136"), Color("#d9b978"))
+	_panel(Rect2(855, 315, 230, 42), Color("#8b6f43"), Color("#e7cb8f"))
+	for x in range(870, 1080, 42):
+		_panel(Rect2(x, 322, 28, 28), Color("#6f9b55"), Color("#b4d77f"))
+		_panel(Rect2(x + 8, 304, 12, 18), Color("#b8d67c"))
+	_panel(Rect2(115, 335, 170, 38), Color("#756044"), Color("#d8bc7d"))
+	_panel(Rect2(125, 342, 150, 20), Color("#a68b54"))
 
 func _floor(color: Color, wooden: bool) -> void:
 	for row: int in range(12):
@@ -122,6 +150,21 @@ func _window(point: Vector2) -> void:
 	_panel(Rect2(point + Vector2(8, 8), Vector2(72, 50)), Color("#759fab"))
 	_panel(Rect2(point + Vector2(41, 8), Vector2(6, 50)), Color("#e7c7a0"))
 	_panel(Rect2(point + Vector2(8, 30), Vector2(72, 5)), Color("#e7c7a0"))
+
+func _arch(point: Vector2, size: Vector2, fill: Color, border: Color) -> void:
+	_panel(Rect2(point + Vector2(0, size.y * 0.25), Vector2(size.x, size.y * 0.75)), fill, border)
+	draw_arc(point + Vector2(size.x * 0.5, size.y * 0.25), size.x * 0.5, PI, TAU, 18, border, 8.0)
+
+func _banner(point: Vector2, color: Color, crest: String) -> void:
+	_panel(Rect2(point, Vector2(54, 112)), color, Color("#e4bd69"))
+	var tip := PackedVector2Array([point + Vector2(0, 112), point + Vector2(27, 136), point + Vector2(54, 112)])
+	draw_colored_polygon(tip, color)
+	draw_string(ThemeDB.fallback_font, point + Vector2(21, 66), crest, HORIZONTAL_ALIGNMENT_LEFT, -1, 26, Color("#f5d68c"))
+
+func _statue(point: Vector2) -> void:
+	_panel(Rect2(point + Vector2(-24, -18), Vector2(48, 18)), Color("#756252"), Color("#d3b77c"))
+	_panel(Rect2(point + Vector2(-14, -74), Vector2(28, 56)), Color("#7f897d"), Color("#d2c39a"))
+	_panel(Rect2(point + Vector2(-22, -88), Vector2(44, 18)), Color("#6e786f"), Color("#d2c39a"))
 
 func _candle(point: Vector2) -> void:
 	_panel(Rect2(point + Vector2(-3, -10), Vector2(6, 18)), Color("#e8d6a3"))
